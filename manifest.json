@@ -1,0 +1,10 @@
+{
+    "name": "SPP New Tab - 2022",
+    "version": "1.0",
+    "description": "The all ne standard SPP new tab exsperience.",
+    "permissions": ["storage", "identity", "identity.email"],
+    "chrome_url_overrides": {
+      "newtab": "index.html"
+    },
+    "manifest_version": 3
+  }
