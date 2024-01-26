@@ -1,7 +1,8 @@
-
 const clockEl = document.querySelector("#clock");
 const letterDayEl = document.querySelector("#letterDay")
 const dateEl = document.querySelector("#date");
+const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
+let bellScheduleShown = false;
 const homeShortcuts = []
 
 updateTime();
@@ -18,7 +19,6 @@ async function getDate() {
 
 	let response = await fetch("../schoolCalender.json");
 	let dayData;
-	let dateId;
 	if (response.ok) {
 		let data = await response.json();
 		let dateId = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
@@ -30,3 +30,20 @@ async function getDate() {
 	}
 	dateEl.innerHTML = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
 }
+
+async function toggleBellSchedule() {
+	console.log("toggle");
+	if(!bellScheduleShown) {
+		bellScheduleContainer.style.display = "flex";
+		bellScheduleContainer.style.opacity = "1";
+		await sleep(250);
+	} else {
+		bellScheduleContainer.style.opacity = "0";
+		await sleep(250);
+		bellScheduleContainer.style.display = "none";
+		console.log(bellScheduleContainer.style.opacity);
+	}
+	bellScheduleShown = !bellScheduleShown;
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
