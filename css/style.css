@@ -31,6 +31,7 @@ body {
 	align-items: center;
 	scale: 75%;
 }
+
 #emblem {
 	position: absolute;
 	width: 12vw;
@@ -94,10 +95,9 @@ body {
 
 #bellScheduleContainer {
 	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
+	display: none;
 	position: absolute;
 	opacity: 0;
-	/* This needs to be refactored to be more responsive aka NOT vw or vh */
 	width: 100%;
 	height: 100%;
 	align-items: center;
