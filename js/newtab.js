@@ -20,6 +20,7 @@ function updateTime() {
 
 async function getDate() {
 	let d = new Date();
+	changeBackground(d.getMonth());
 
 	let response = await fetch("../schoolCalender.json");
 	let dayData;
@@ -35,26 +36,23 @@ async function getDate() {
 	dateEl.innerHTML = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
 }
 
-async function changeBackground() {
-	let date = new Date();
-	var season;
-	var month = date.getMonth() + 1; // January is normally 0 and December is 11. Hence why we add +1 to make it easier
-	// var month = 6;
-		if (month >= 9 && month <= 11) {
-		  	var season = "../img/MSCBuildingFall.webp"; // TODO: Actual Image
-		}
-		else if (month == 12 || month == 1 || month == 2){
-			var season = "../img/Test.png"; // TODO: Actual Image
-		}
-		else if (month >= 6 && month <= 8){
-			var season = "../img/MSCBuildingTest.png"; // TODO: Actual Image
-		}
-		else {
-			var season = "Placeholder"; // TODO: Actual Image
-		}
-	console.log("season "+ season);
-	console.log("month "+ month);
-	document.documentElement.style.setProperty('--season-background', `url('${season}')`);
+function changeBackground(month) {
+	month += 1;
+	let imageUrl;
+	if (month == 12 || month <= 2) {
+		// WINTER
+		imageUrl = "../img/MSCBuildingFall.webp";
+	} else if (month >= 3 && month <= 5){
+		// SPRING
+		imageUrl = "../img/Test.png";
+	} else if (month >= 6 && month <= 9){
+		// SUMMER
+		imageUrl = "../img/MSCBuildingTest.png";
+	} else {
+		// FALL
+		imageUrl = "Placeholder";
+	}
+	document.documentElement.style.setProperty('--season-background', `url('${imageUrl}')`);
 }
 
 async function toggleBellSchedule() {
