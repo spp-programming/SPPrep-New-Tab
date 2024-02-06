@@ -96,9 +96,6 @@ body {
 	background: white;
 	padding: 20px;
 	box-shadow: 2px 2px 12px black;
-}
-
-.icon[alt=bellschedule] {
   cursor: pointer;
 }
 
