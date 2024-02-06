@@ -1,118 +1,135 @@
-@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@600&display=swap");
 
 body {
-	margin: 0;
-	display: flex;
-	font-family: 'Azeret Mono', monospace;
-	font-weight: bold;
-	color: white;
+    margin: 0;
+    display: flex;
+    font-family: "Azeret Mono", monospace;
+    font-weight: bold;
+    color: white;
 }
 
 #contentContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	background-color: #9B042B;
-	width: 75vw;
-	height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+#bg-image {
+    background-image: url("../img/MSCBuilding.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#bg-gradient {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 20%,
+        rgba(155, 4, 43, 1) 120%
+    );
+    content: "";
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 #clock {
-	font-size: 10em;
-	text-align: center;
-	margin: 0;
-	padding: 0;
+    font-size: 10em;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 #content {
-	display: felx;
-	justify-content: center;
-	align-items: center;
-	scale: 75%;
+    display: felx;
+    justify-content: center;
+    align-items: center;
+    scale: 75%;
 }
 
 #emblem {
-	position: absolute;
-	width: 12vw;
-	height: 12vw;
-	top: 15px;
-	right: 15px;
+    position: absolute;
+    width: 12vw;
+    height: 12vw;
+    top: 15px;
+    right: 15px;
 }
 
 #backgroundPicture {
-	width: 35vw;
-	height: 100vh;
-	background-image: url("../img/MSCBuilding.png");
-	background-size: cover;
-	background-position: center;
+    width: 35vw;
+    height: 100vh;
+    background-image: url("../img/MSCBuilding.png");
+    background-size: cover;
+    background-position: center;
 }
 
 #dayInfoContainer {
-	display: flex;
-	font-size: 4em;
-	align-items: center;
-	justify-content: center;
-	margin-top: 10px;
-	margin-bottom: 40px;
+    display: flex;
+    font-size: 4em;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 #bufferBar {
-	margin: 0px 45px;
-	width: 15px;
-	height: 65px;
-	background: white;
+    margin: 0px 45px;
+    width: 15px;
+    height: 65px;
+    background: white;
 }
 
 #letterDay {
-	margin: 0px;
+    margin: 0px;
 }
 
 #date {
-	margin: 0px;
+    margin: 0px;
 }
 
 #buttonContainer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: auto;
-	flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90vw;
+    flex-wrap: wrap;
 }
 
 .icon {
-	height: 75px;
-	position: relative;
-	background: white;
-	border-radius: 8px;
-	padding: 20px;
-	box-shadow: 2px 2px 12px black;
+    height: 75px;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 2px 2px 12px black;
 }
 
 .iconContainer {
-	margin: 0px 20px;
+    margin: 0px 20px;
 }
 
-.icon[alt=bellschedule] {
-  cursor: pointer;
+.icon[alt="bellschedule"] {
+    cursor: pointer;
 }
 
 #bellScheduleContainer {
-	background-color: rgba(0, 0, 0, 0.5);
-	display: none;
-	position: absolute;
-	opacity: 0;
-	width: 100%;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	transition: opacity 0.25s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.25s ease-in-out;
 }
 
 #bellScheduleContainer.bellScheduleShown {
-	width: 100%;
+    width: 100%;
 }
 
 #bellSchedule {
-	height: 85%;
+    height: 85%;
 }
