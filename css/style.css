@@ -93,6 +93,10 @@ body {
 	margin: 0px 20px;
 }
 
+.icon[alt=bellschedule] {
+  cursor: pointer;
+}
+
 #bellScheduleContainer {
 	background-color: rgba(0, 0, 0, 0.5);
 	display: none;
