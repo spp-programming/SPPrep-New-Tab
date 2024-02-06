@@ -43,7 +43,7 @@ body {
 #backgroundPicture {
 	width: 35vw;
 	height: 100vh;
-	background-image: url("../img/MSCBuilding.png");
+	background-image: var(--season-background);
 	background-size: cover;
 	background-position: center;
 }
