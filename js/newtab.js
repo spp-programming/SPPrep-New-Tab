@@ -2,6 +2,10 @@ const clockEl = document.querySelector("#clock");
 const letterDayEl = document.querySelector("#letterDay")
 const dateEl = document.querySelector("#date");
 const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
+
+// Global variable 
+document.documentElement.style.setProperty('--season-background', 'MSCBuilding.jpg');
+
 let bellScheduleShown = false;
 const homeShortcuts = []
 
@@ -16,6 +20,7 @@ function updateTime() {
 
 async function getDate() {
 	let d = new Date();
+	changeBackground(d.getMonth());
 
 	let response = await fetch("../schoolCalender.json");
 	let dayData;
@@ -29,6 +34,25 @@ async function getDate() {
 		document.querySelector("#bufferBar").style.display = "block";
 	}
 	dateEl.innerHTML = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+}
+
+function changeBackground(month) {
+	month += 1;
+	let imageUrl;
+	if (month == 12 || month <= 2) {
+		// WINTER
+		imageUrl = "../img/MSCBuildingFall.webp";
+	} else if (month >= 3 && month <= 5){
+		// SPRING
+		imageUrl = "../img/Test.png";
+	} else if (month >= 6 && month <= 9){
+		// SUMMER
+		imageUrl = "../img/MSCBuildingTest.png";
+	} else {
+		// FALL
+		imageUrl = "Placeholder";
+	}
+	document.documentElement.style.setProperty('--season-background', `url('${imageUrl}')`);
 }
 
 async function toggleBellSchedule() {
