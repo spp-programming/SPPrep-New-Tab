@@ -81,21 +81,25 @@ body {
 }
 
 .icon {
-	height: 75px;
-	position: relative;
-	background: white;
-	border-radius: 8px;
-	padding: 20px;
-	box-shadow: 2px 2px 12px black;
+  max-height: 75px;
+  max-width: 75px;
+  margin: auto;
+  display: block;
 }
 
 .iconContainer {
+	height: 75px;
+	width: 75px;
+	position: relative;
 	margin: 0px 20px;
-	aspect-ratio: 1 / 1;
 }
 
 .icon[alt=bellschedule] {
-  cursor: pointer;
+	border-radius: 8px;
+	background: white;
+	padding: 20px;
+	box-shadow: 2px 2px 12px black;
+	cursor: pointer;
 }
 
 #bellScheduleContainer {
