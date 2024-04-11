@@ -21,8 +21,8 @@ body {
     background-image: url("../img/MSCBuildingTest.png");
     background-repeat: no-repeat;
     background-size: cover;
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #bg-gradient {
@@ -38,7 +38,7 @@ body {
 }
 
 #clock {
-    font-size: 10em;
+    font-size: 6rem;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -48,7 +48,6 @@ body {
     display: felx;
     justify-content: center;
     align-items: center;
-    scale: 75%;
 }
 
 #emblem {
@@ -87,12 +86,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90vw;
+    gap: 0.01%;
+    width: 95vw;
     flex-wrap: wrap;
 }
 
 .icon {
-	height: 75px;
+    height: 45px;
     background: white;
     border-radius: 8px;
     padding: 20px;
@@ -127,4 +127,18 @@ body {
 
 #bellSchedule {
     height: 85%;
+}
+
+.errorPopupContainer {
+    position: absolute;
+    width: 100%;
+    padding: 1rem 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorPopupContainer > p {
+    text-align: center;
 }
