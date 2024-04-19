@@ -19,19 +19,40 @@ let calendarManager = (() => {
     const letterDays = "ABCDEFGH";
 
     async function getTodaysEvents() {
-        return fetch(
-            `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}`
-        )
-            .then((r) => r.json())
-            .then((r) =>
-                r.items.filter((item) => letterDays.includes(item.summary))
+        try {
+            const response = await fetch(
+                `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}`
             );
+
+            const data = await response.json();
+
+            console.log(data.items);
+
+            return data.items;
+
+            return data.items.filter((item) =>
+                letterDays.includes(item.summary)
+            );
+        } catch (error) {
+            console.error("Error fetching today's events:", error);
+            return []; // Return an empty array or handle the error as needed
+        }
+    }
+
+    async function getLetterDay() {
+        let todaysEvents = await getTodaysEvents();
+        console.log(todaysEvents);
+        let letterDay = todaysEvents.filter((item) =>
+            letterDays.includes(item.summary)
+        );
+        return letterDay[0]["summary"].slice(0, 1);
     }
 
     getTodaysEvents().then(console.log);
 
     return {
         getTodaysEvents,
+        getLetterDay,
     };
 })();
 
@@ -79,9 +100,7 @@ async function getDate() {
     // dateEl.innerHTML = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
     letterDayEl.innerHTML = "...";
     try {
-        let todaysEvents = await calendarManager.getTodaysEvents();
-        let letterDay = todaysEvents[0]["summary"];
-        letterDayEl.innerHTML = letterDay + "-DAY";
+        letterDayEl.innerHTML = (await calendarManager.getLetterDay()) + "-DAY";
     } catch (e) {
         console.log(e);
         letterDayEl.innerHTML = "...";
