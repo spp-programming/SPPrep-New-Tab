@@ -18,6 +18,39 @@ let calendarManager = (() => {
 
     const letterDays = "ABCDEFGH";
 
+    function runOncePerDay() {
+        // Check if last execution date is stored
+        // var fake_date = new Date("April 17, 2024 11:13:00");
+    
+        //overriding date function
+        // Date = function(){return fake_date;};
+        // var currentDate = new Date();
+        // alert(currentDate);
+    
+        let lastExecutionDate = localStorage.getItem('lastExecutionDate');
+        currentDate = new Date().toLocaleDateString();
+    
+        // If last execution date doesn't exist or it's different from today
+        if (!lastExecutionDate || lastExecutionDate !== currentDate) {
+            // Run your function here
+            console.log("Function executed once today");
+            console.log("Current date:", currentDate);
+            console.log("Last Execution date: ", lastExecutionDate)
+    
+            // Update last execution date
+            localStorage.setItem('lastExecutionDate', currentDate);
+    
+            return
+        }
+        else {
+            console.log("It already executed");
+            console.log("Last execution date:", lastExecutionDate);
+            console.log("Current date:", currentDate);
+    
+            return
+        }
+    }
+
     async function getTodaysEvents() {
         try {
             const response = await fetch(
