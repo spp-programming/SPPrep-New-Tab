@@ -132,3 +132,20 @@ async function toggleBellSchedule() {
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const rss_url = 'https://spprep.org/feed/';
+
+fetch(rss_url, {mode: "no-cors",})
+    .then(response => {
+        if (!response.ok) {
+            console.log("There was an error parsing the XML");
+        }
+        else {
+            console.log("works");
+            return response.text();
+        }
+    }).then(XmlData => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(XmlData, 'text/xml');
+
+        const items = xmlDoc.getElementsByTagName('item');})
