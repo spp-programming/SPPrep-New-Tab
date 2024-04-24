@@ -106,6 +106,7 @@ const homeShortcuts = [];
 updateTime();
 setInterval(updateTime, 1000);
 getDate();
+runOncePerDay();
 
 function updateTime() {
     let d = new Date();
