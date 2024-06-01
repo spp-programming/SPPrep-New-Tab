@@ -170,6 +170,7 @@ function changeBackground(month) {
 }
 
 async function toggleBellSchedule() {
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     console.log("toggle");
     if (!bellScheduleShown) {
         bellScheduleContainer.style.display = "flex";
@@ -183,5 +184,3 @@ async function toggleBellSchedule() {
     }
     bellScheduleShown = !bellScheduleShown;
 }
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
