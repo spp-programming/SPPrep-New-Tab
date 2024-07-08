@@ -2,7 +2,6 @@
     "name": "SPP New Tab - 2024",
     "version": "2.0",
     "description": "The all new-NEW standard SPP new tab exsperience.",
-    "permissions": ["storage", "identity", "identity.email"],
     "chrome_url_overrides": {
       "newtab": "index.html"
     },
