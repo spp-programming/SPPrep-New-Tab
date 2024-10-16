@@ -1,7 +1,7 @@
 {
     "name": "SPP New Tab - 2024",
     "version": "3.0",
-    "description": "The all new-NEW standard SPP new tab exsperience.",
+    "description": "The all new-NEW-NEW standard SPP new tab experience.",
     "chrome_url_overrides": {
       "newtab": "index.html"
     },
