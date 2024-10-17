@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- This allows the modal overlay background to be transparent regardless of the user's settings -->
+        <meta name="color-scheme" content="light dark">
         <meta name="description" content="New Tab">
         <meta name="author" content="Saint Peter's Prep Programming Club">
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
@@ -10,7 +12,10 @@
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
-        <div id="bg-image">
+        <!-- Hack: This makes the passcode/secret settings modal work without rewriting the rest of the application to work with Bootstrap -->
+        <iframe id="modal-overlay" src="modal-overlay.html" hidden></iframe>
+        <!-- Hide the main element until the page is fully loaded (FOUC workaround) -->
+        <div id="bg-image" hidden>
             <div id="bg-gradient">
                 <div id="contentContainer">
                     <div id="content">
@@ -30,7 +35,7 @@
                             <a class="iconContainer" href="https://drive.google.com/drive">
                                 <img class="icon" src="./img/icons/google_drive.png" alt="Drive" title="Drive">
                             </a>
-                            <a class="iconContainer" onclick="toggleBellSchedule()">
+                            <a class="iconContainer" id="bell-schedule-button">
                                 <img class="icon" src="./img/icons/bell.png" alt="Bell Schedule" title="Bell Schedule">
                             </a>
                             <a class="iconContainer" href="https://accounts.google.com/o/saml2/initsso?idpid=C04abkbep&spid=58097645075&forceauthn=false">
@@ -48,7 +53,7 @@
             </div>
         </div>
         <img id="emblem" src="./img/res/emblem.png" alt="Saint Peter's Prep Emblem">
-        <div id="bellScheduleContainer" onclick="toggleBellSchedule()">
+        <div id="bellScheduleContainer">
             <img id="bellSchedule" src="./img/res/bell_schedule.webp" alt="Bell Schedule: Please see school website for accessible version">
         </div>
         <script src="js/newtab.js"></script>

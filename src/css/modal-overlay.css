@@ -1,0 +1,6 @@
+.has-icons {
+    font-family: "bootstrap-icons", var(--bs-body-font-family);
+}
+body {
+    background-color: transparent !important;
+}
