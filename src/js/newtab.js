@@ -1,0 +1,317 @@
+let calendarManager = (() => {
+    const API_KEY = "AIzaSyCOQ3EYDqe7-ypGvnNb1NZQN6Ib2eb7LG0"
+    const CALENDAR_ID = "144grand@gmail.com"
+    const CALENDAR_TZ = "America/New_York"
+
+    // Get the current date in UTC
+    const currentDateUTC = new Date()
+
+    // Get the time zone offset in minutes for the current date
+    const timeZoneOffsetMinutes = currentDateUTC.getTimezoneOffset()
+
+    // Convert the current date to EST by adjusting according to timezone offset
+    const timeZoneOffset = -timeZoneOffsetMinutes // EST offset in minutes
+    const currentDateEST = new Date(currentDateUTC.getTime() + timeZoneOffset * 60 * 1000)
+
+    // Extract the date parts for the EST Timezone
+    const year = currentDateEST.getFullYear()
+    const month = String(currentDateEST.getMonth()+1).padStart(2, "0") // Months are 0-based in JS
+    const day = String(currentDateEST.getDate()).padStart(2, "0")
+
+    const timeZoneOffsetISO = convertOffsetToISO(timeZoneOffsetMinutes)
+    const timeMin = `${year}-${month}-${day}T00:00:00${timeZoneOffsetISO}` // Start of the day in EST
+    const timeMax = `${year}-${month}-${day}T23:59:59${timeZoneOffsetISO}` // End of the day in EST
+
+    console.log(timeMin)
+    console.log(timeMax)
+
+    async function getLetterDay() {
+        let todaysEvents = await getTodaysEvents()
+        console.log(todaysEvents)
+
+        // Check if letterDay array is not empty
+        if (todaysEvents.length > 0 && todaysEvents[0] && todaysEvents[0].summary) {
+            let letterDayExtracted
+            todaysEvents.forEach(event => {
+                if (extractLetterDay(event.summary) !== "🤷‍♂️") {
+                    letterDayExtracted = extractLetterDay(event.summary)
+                }
+            })
+            if (letterDayExtracted === undefined) {
+                letterDayExtracted = "🤷‍♂️"
+            }
+            return letterDayExtracted
+        } else {
+            // Handle the case where no matching letter day is found
+            console.error("No letter day found in today's events.")
+            return "🤷‍♂️"  // or some default value or throw an error
+        }
+    }
+
+    async function getTodaysEvents() {
+        // You need to define this function based on your application logic.
+        // Assuming it fetches events from Google Calendar API or similar
+        const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}&timeZone=${CALENDAR_TZ}`)
+        const data = await response.json()
+        return data.items
+    }
+
+    return {
+        getTodaysEvents,
+        getLetterDay,
+    }
+})()
+
+const clockEl = document.querySelector("#clock")
+const letterDayEl = document.querySelector("#letterDay")
+const dateEl = document.querySelector("#date")
+const bellScheduleButton = document.getElementById("bell-schedule-button")
+const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
+const modalOverlay = document.getElementById("modal-overlay")
+const emblem = document.getElementById("emblem")
+
+// Global variable
+document.documentElement.style.setProperty(
+    "--season-background",
+    "MSCBuilding.jpg"
+)
+
+function convertOffsetToISO(offsetSeconds) {
+    let newOffset
+    let offsetAbsoluteSeconds = Math.abs(offsetSeconds)
+    switch (Math.sign(offsetSeconds)) {
+        case -1:
+            newOffset = "+"
+            break
+        case 0:
+            newOffset = "+"
+            break
+        case 1:
+            newOffset = "-"
+            break
+    }
+    let hours = Math.floor(offsetAbsoluteSeconds / 60)
+    let minutes = offsetAbsoluteSeconds % 60
+    hours = String(hours).padStart(2, "0")
+    minutes = String(minutes).padStart(2, "0")
+    newOffset = newOffset.concat(`${hours}:${minutes}`)
+    return newOffset
+}
+
+function extractLetterDay(description) {
+    // Is there any way to optimize this atrocity?
+    let exactlyMatchesLetterA = ["A", "A ", " A", " A ", "A  ", "  A", "  A  "] 
+    let startsWithLetterA = ["A - Assembly", "A- Assembly", " A -Assembly", "A-Assembly", " A - Assembly", " A- Assembly", " A -Assembly", " A-Assembly", "A (Cycle", "A(Cycle", "A ( Cycle", "A( Cycle", " A (Cycle", " A(Cycle", " A (Cycle", " A(Cycle", " A ( Cycle", " A( Cycle", "A (End of MP", "A(End of MP", "A ( End of MP", "A( End of MP", " A (End of MP", " A(End of MP", " A (End of MP", " A(End of MP", " A ( End of MP", " A( End of MP"]
+    let exactlyMatchesLetterB = ["B", "B ", " B", " B ", "B  ", "  B", "  B  "]
+    let startsWithLetterB = ["B - Assembly", "B- Assembly", " B -Assembly", "B-Assembly", " B - Assembly", " B- Assembly", " B -Assembly", " B-Assembly", "B (Cycle", "B(Cycle", "B ( Cycle", "B( Cycle", " B (Cycle", " B(Cycle", " B (Cycle", " B(Cycle", " B ( Cycle", " B( Cycle", "B (End of MP", "B(End of MP", "B ( End of MP", "B( End of MP", " B (End of MP", " B(End of MP", " B (End of MP", " B(End of MP", " B ( End of MP", " B( End of MP"]
+    let exactlyMatchesLetterC = ["C", "C ", " C", " C ", "C  ", "  C", "  C  "]
+    let startsWithLetterC = ["C - Assembly", "C- Assembly", " C -Assembly", "C-Assembly", " C - Assembly", " C- Assembly", " C -Assembly", " C-Assembly", "C (Cycle", "C(Cycle", "C ( Cycle", "C( Cycle", " C (Cycle", " C(Cycle", " C (Cycle", " C(Cycle", " C ( Cycle", " C( Cycle", "C (End of MP", "C(End of MP", "C ( End of MP", "C( End of MP", " C (End of MP", " C(End of MP", " C (End of MP", " C(End of MP", " C ( End of MP", " C( End of MP"]
+    let exactlyMatchesLetterD = ["D", "D ", " D", " D ", "D  ", "  D", "  D  "]
+    let startsWithLetterD = ["D - Assembly", "D- Assembly", " D -Assembly", "D-Assembly", " D - Assembly", " D- Assembly", " D -Assembly", " D-Assembly", "D (Cycle", "D(Cycle", "D ( Cycle", "D( Cycle", " D (Cycle", " D(Cycle", " D (Cycle", " D(Cycle", " D ( Cycle", " D( Cycle", "D (End of MP", "D(End of MP", "D ( End of MP", "D( End of MP", " D (End of MP", " D(End of MP", " D (End of MP", " D(End of MP", " D ( End of MP", " D( End of MP"]
+    let exactlyMatchesLetterE = ["E", "E ", " E", " E ", "E  ", "  E", "  E  "]
+    let startsWithLetterE = ["E - Assembly", "E- Assembly", " E -Assembly", "E-Assembly", " E - Assembly", " E- Assembly", " E -Assembly", " E-Assembly", "E (Cycle", "E(Cycle", "E ( Cycle", "E( Cycle", " E (Cycle", " E(Cycle", " E (Cycle", " E(Cycle", " E ( Cycle", " E( Cycle", "E (End of MP", "E(End of MP", "E ( End of MP", "E( End of MP", " E (End of MP", " E(End of MP", " E (End of MP", " E(End of MP", " E ( End of MP", " E( End of MP"]
+    let exactlyMatchesLetterF = ["F", "F ", " F", " F ", "F  ", "  F", "  F  "]
+    let startsWithLetterF = ["F - Assembly", "F- Assembly", " F -Assembly", "F-Assembly", " F - Assembly", " F- Assembly", " F -Assembly", " F-Assembly", "F (Cycle", "F(Cycle", "F ( Cycle", "F( Cycle", " F (Cycle", " F(Cycle", " F (Cycle", " F(Cycle", " F ( Cycle", " F( Cycle", "F (End of MP", "F(End of MP", "F ( End of MP", "F( End of MP", " F (End of MP", " F(End of MP", " F (End of MP", " F(End of MP", " F ( End of MP", " F( End of MP"]
+    let exactlyMatchesLetterG = ["G", "G ", " G", " G ", "G  ", "  G", "  G  "]
+    let startsWithLetterG = ["G - Assembly", "G- Assembly", " G -Assembly", "G-Assembly", " G - Assembly", " G- Assembly", " G -Assembly", " G-Assembly", "G (Cycle", "G(Cycle", "G ( Cycle", "G( Cycle", " G (Cycle", " G(Cycle", " G (Cycle", " G(Cycle", " G ( Cycle", " G( Cycle", "G (End of MP", "G(End of MP", "G ( End of MP", "G( End of MP", " G (End of MP", " G(End of MP", " G (End of MP", " G(End of MP", " G ( End of MP", " G( End of MP"]
+    let exactlyMatchesLetterH = ["H", "H ", " H", " H ", "H  ", "  H", "  H  "]
+    let startsWithLetterH = ["H - Assembly", "H- Assembly", " H -Assembly", "H-Assembly", " H - Assembly", " H- Assembly", " H -Assembly", " H-Assembly", "H (Cycle", "H(Cycle", "H ( Cycle", "H( Cycle", " H (Cycle", " H(Cycle", " H (Cycle", " H(Cycle", " H ( Cycle", " H( Cycle", "H (End of MP", "H(End of MP", "H ( End of MP", "H( End of MP", " H (End of MP", " H(End of MP", " H (End of MP", " H(End of MP", " H ( End of MP", " H( End of MP"]
+    if (exactlyMatchesLetterA.includes(description)) {
+        return "A"
+    } else if (startsWithLetterA.some(substr => description.startsWith(substr))) {
+        return "A"
+    } else if (exactlyMatchesLetterB.includes(description)) {
+        return "B"
+    } else if (startsWithLetterB.some(substr => description.startsWith(substr))) {
+        return "B"
+    } else if (exactlyMatchesLetterC.includes(description)) {
+        return "C"
+    } else if (startsWithLetterC.some(substr => description.startsWith(substr))) {
+        return "C"
+    } else if (exactlyMatchesLetterD.includes(description)) {
+        return "D"
+    } else if (startsWithLetterD.some(substr => description.startsWith(substr))) {
+        return "D"
+    } else if (exactlyMatchesLetterE.includes(description)) {
+        return "E"
+    } else if (startsWithLetterE.some(substr => description.startsWith(substr))) {
+        return "E"
+    } else if (exactlyMatchesLetterF.includes(description)) {
+        return "F"
+    } else if (startsWithLetterF.some(substr => description.startsWith(substr))) {
+        return "F"
+    } else if (exactlyMatchesLetterG.includes(description)) {
+        return "G"
+    } else if (startsWithLetterG.some(substr => description.startsWith(substr))) {
+        return "G"
+    } else if (exactlyMatchesLetterH.includes(description)) {
+        return "H"
+    } else if (startsWithLetterH.some(substr => description.startsWith(substr))) {
+        return "H"
+    } else {
+        // Handle the case where no matching letter day is found
+        console.error("No letter day found in today's events.")
+        return "🤷‍♂️"  // or some default value or throw an error
+    }
+}
+
+function runOncePerDay() {
+    // Check if last execution date is stored
+    // var fake_date = new Date("April 17, 2024 11:13:00")
+
+    //overriding date function
+    // Date = function(){return fake_date;}
+    // var currentDate = new Date()
+    // alert(currentDate)
+
+    let lastExecutionDate = localStorage.getItem("lastExecutionDate")
+    currentDate = new Date().toLocaleDateString()
+
+    // If last execution date doesn't exist or it's different from today
+    if (!lastExecutionDate || lastExecutionDate !== currentDate) {
+        // Run your function here
+        console.log("Function executed once today")
+        console.log("Current date:", currentDate)
+        console.log("Last Execution date: ", lastExecutionDate)
+
+        // Update last execution date
+        localStorage.setItem("lastExecutionDate", currentDate)
+
+        return
+    }
+    else {
+        console.log("It already executed")
+        console.log("Last execution date:", lastExecutionDate)
+        console.log("Current date:", currentDate)
+
+        return
+    }
+}
+
+let bellScheduleShown = false
+
+function updateTime() {
+    let d = new Date()
+    currentTime = `${d.getHours() % 12 == 0 ? 12 : d.getHours() % 12}:${d
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")} `
+    // Although updateTime is called every millisecond, we should only update the DOM when it's needed
+    if (clockEl.innerHTML != currentTime) {
+        clockEl.innerHTML = currentTime
+    }
+}
+
+async function getDate() {
+    // let d = new Date()
+    // changeBackground(d.getMonth())
+
+    // let response = await fetch("../schoolCalender.json")
+    // let dayData
+    // if (response.ok) {
+    //     let data = await response.json()
+    //     let dateId = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
+    //     dayData = data.find((e) => e.date == dateId)
+    // }
+    // if (dayData != undefined) {
+    //     letterDayEl.innerHTML = dayData.letter + " - DAY"
+    //     document.querySelector("#bufferBar").style.display = "block"
+    // }
+    // dateEl.innerHTML = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
+    try {
+        let currentLetterDay = await calendarManager.getLetterDay()
+        console.log(`Current Letter Day: ${currentLetterDay}`)
+        if (currentLetterDay === "🤷‍♂️") {
+            letterDayEl.setAttribute("title", "No letter day found for today. Hit refresh to try again.")
+        } else {
+            letterDayEl.removeAttribute("title")
+            currentLetterDay = `${currentLetterDay}-DAY`
+        }
+        letterDayEl.innerHTML = currentLetterDay
+    } catch (e) {
+        console.log(e)
+        letterDayEl.innerHTML = "🤯"
+        letterDayEl.setAttribute("title", "Woah! Something went wrong. Hit refresh to try again.")
+        let errorPopup = document.createElement("div")
+        errorPopup.classList.add("errorPopupContainer")
+        let errorPopupText = document.createElement("p")
+        errorPopupText.innerHTML = "Couldn't query School Calendar. Check your connection and refresh the page to try again"
+        errorPopup.appendChild(errorPopupText)
+        document.body.appendChild(errorPopup)
+    }
+}
+
+function changeBackground(month) {
+    month += 1
+    let imageUrl
+    if (month == 12 || month <= 2) {
+        // WINTER
+        imageUrl = "../img/MSCBuildingFallWinter.webp"
+    } else if (month >= 3 && month <= 5) {
+        // SPRING
+        imageUrl = "../img/MSCBuildingSpringSummer.webp"
+    } else if (month >= 6 && month <= 9) {
+        // SUMMER
+        imageUrl = "../img/MSCBuildingSpringSummer.webp"
+    } else {
+        // FALL
+        imageUrl = "../img/MSCBuildingFallWinter.webp"
+    }
+    document.documentElement.style.setProperty(
+        "--season-background",
+        `url("${imageUrl}")`
+    )
+}
+
+async function toggleBellSchedule() {
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+    console.log("Toggle: Bell Schedule")
+    if (!bellScheduleShown) {
+        bellScheduleContainer.style.display = "flex"
+        bellScheduleContainer.style.opacity = "1"
+        await sleep(250)
+    } else {
+        bellScheduleContainer.style.opacity = "0"
+        await sleep(250)
+        bellScheduleContainer.style.display = "none"
+        console.log(bellScheduleContainer.style.opacity)
+    }
+    bellScheduleShown = !bellScheduleShown
+}
+
+function revealPageContent() {
+    // Reveal the main element only when the page is fully loaded (FOUC workaround)
+    const pageContent = document.getElementById("bg-image")
+    pageContent.hidden = false
+}
+
+function hideModalOverlay() {
+    modalOverlay.hidden = true
+}
+
+function showModalOverlay() {
+    modalOverlay.hidden = false
+    modalOverlay.contentWindow.openPasscodeModal()
+}
+
+emblem.addEventListener("dblclick", () => {
+    if (window.location.protocol === "file:") {
+        alert("Our mythical abilities have determined that you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, we have canceled your action to avoid issues.")
+    } else {
+        showModalOverlay()
+    }
+})
+
+bellScheduleButton.addEventListener("click", () => {
+    toggleBellSchedule()
+})
+
+bellScheduleContainer.addEventListener("click", () => {
+    toggleBellSchedule()
+})
+
+revealPageContent()
+updateTime()
+setInterval(updateTime, 1) // Calling updateTime every 1000 ms causes noticeable lag (many milliseconds) so we instead call it every millisecond to avoid this problem
+getDate()
+runOncePerDay()

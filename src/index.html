@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- This allows the modal overlay background to be transparent regardless of the user's settings -->
+        <meta name="color-scheme" content="light dark">
+        <meta name="description" content="New Tab">
+        <meta name="author" content="Saint Peter's Prep Programming Club">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <title>New Tab</title>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <!-- Hack: This makes the passcode/secret settings modal work without rewriting the rest of the application to work with Bootstrap -->
+        <iframe id="modal-overlay" src="modal-overlay.html" hidden></iframe>
+        <!-- Hide the main element until the page is fully loaded (FOUC workaround) -->
+        <div id="bg-image" hidden>
+            <div id="bg-gradient">
+                <div id="contentContainer">
+                    <div id="content">
+                        <p id="clock">__:__:__ __</p>
+                        <div id="dayInfoContainer">
+                            <p id="letterDay" title="Loading letter day...">🤔</p>
+                            <div id="bufferBar" style="display: none"></div>
+                            <p id="date"></p>
+                        </div>
+                        <div id="buttonContainer">
+                            <a class="iconContainer" href="https://spprep.powerschool.com/public/">
+                                <img class="icon" src="./img/icons/powerschool.png" alt="PowerSchool" title="PowerSchool">
+                            </a>
+                            <a class="iconContainer" href="https://mail.google.com">
+                                <img class="icon" src="./img/icons/gmail.png" alt="Gmail" title="Gmail">
+                            </a>
+                            <a class="iconContainer" href="https://drive.google.com/drive">
+                                <img class="icon" src="./img/icons/google_drive.png" alt="Drive" title="Drive">
+                            </a>
+                            <a class="iconContainer" id="bell-schedule-button">
+                                <img class="icon" src="./img/icons/bell.png" alt="Bell Schedule" title="Bell Schedule">
+                            </a>
+                            <a class="iconContainer" href="https://accounts.google.com/o/saml2/initsso?idpid=C04abkbep&spid=58097645075&forceauthn=false">
+                                <img class="icon" src="./img/icons/canvas.png" alt="Canvas" title="Canvas">
+                            </a>
+                            <a class="iconContainer" href="https://calendar.google.com/calendar/u/0/embed?title=Saint+Peter%27s+Prep+Calendar&height=600&wkst=1&bgcolor=%23FFFFFF&src=144grand@gmail.com&color=%23A32929&src=j2u1oqdhka8e0v1o4p5t6avcjk@group.calendar.google.com&color=%236E6E41&src=j62aodeshq58d2u3la7pi9b8os@group.calendar.google.com&color=%230D7813&src=4pjksvuk9if0th7fa6tp1ainoo@group.calendar.google.com&color=%2329527A&ctz=America/New_York">
+                                <img class="icon" src="./img/icons/calendar.png" alt="School Calendar" title="School Calendar">
+                            </a>
+                            <a class="iconContainer" href="https://membean.com/dashboard">
+                                <img class="icon" src="./img/icons/membean.png" alt="Membean">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img id="emblem" src="./img/res/emblem.png" alt="Saint Peter's Prep Emblem">
+        <div id="bellScheduleContainer">
+            <img id="bellSchedule" src="./img/res/bell_schedule.webp" alt="Bell Schedule: Please see school website for accessible version">
+        </div>
+        <script src="js/newtab.js"></script>
+    </body>
+</html>
