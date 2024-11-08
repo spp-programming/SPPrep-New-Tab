@@ -296,7 +296,7 @@ function showModalOverlay() {
 
 emblem.addEventListener("dblclick", () => {
     if (window.location.protocol === "file:") {
-        alert("Our mythical abilities have determined that you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, we have canceled your action to avoid issues.")
+        alert("It looks like you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, we have canceled your action to avoid issues.")
     } else {
         showModalOverlay()
     }
