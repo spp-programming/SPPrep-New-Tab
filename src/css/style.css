@@ -156,3 +156,8 @@ body {
 .errorPopupContainer > p {
     text-align: center;
 }
+
+.no-user-select {
+    user-select: none;
+    -webkit-user-select: none; /* Does Safari support matter in a Chrome extension? I think it does. */
+}
