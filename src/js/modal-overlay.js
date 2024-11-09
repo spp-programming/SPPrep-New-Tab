@@ -154,7 +154,7 @@ if (self === top) {
     document.body.innerHTML = "<h3>This page is intended to be embedded into the new tab page.</h3><p>You can safely navigate away or close this page.</p>"
 } else {
     if (window.location.protocol === "file:") {
-        alert("Our mythical abilities have determined that you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, features that involve iframes (like the modal popup) will not be functional.\nPlease run this extension by enabling developer mode in Chrome and loading this extension unpacked.")
+        alert("It looks like you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, features that involve iframes (like the modal popup) will not be functional.\nPlease run this extension by enabling developer mode in Chrome and loading this extension unpacked.")
     } else {
         window.parent.hideModalOverlay()
     }
