@@ -32,14 +32,22 @@ const calendarManager = (() => {
         // Check if letterDay array is not empty
         if (todaysEvents.length > 0 && todaysEvents[0] && todaysEvents[0].summary) {
             let letterDayExtracted
+            let sanityCounter = 0
             todaysEvents.forEach(event => {
                 if (extractLetterDay(event.summary) !== "🤷‍♂️") {
+                    sanityCounter++
                     letterDayExtracted = extractLetterDay(event.summary)
                 }
             })
             if (letterDayExtracted === undefined) {
                 letterDayExtracted = "🤷‍♂️"
+            } else if (sanityCounter > 1) {
+                console.log(`sanityCounter is ${sanityCounter}`)
+                // Handle the edge case where multiple letter days are found.
+                console.error("Multiple letter days were found for today. This is most probably a bug.")
+                letterDayExtracted = "😐"
             }
+            sanityCounter = 0
             return letterDayExtracted
         } else {
             // Handle the case where no matching letter day is found
@@ -221,9 +229,14 @@ async function getDate() {
     try {
         let currentLetterDay = await calendarManager.getLetterDay()
         console.log(`Current Letter Day: ${currentLetterDay}`)
-        if (currentLetterDay === "🤷‍♂️") {
+        switch (currentLetterDay) {
+            case "🤷‍♂️":
             letterDayEl.setAttribute("title", "No letter day found for today. Hit refresh to try again.")
-        } else {
+                break
+            case "😐":
+                letterDayEl.setAttribute("title", "Multiple letter days were found for today. This is most probably a bug.")
+                break
+            default:
             letterDayEl.removeAttribute("title")
             currentLetterDay = `${currentLetterDay}-DAY`
         }
@@ -290,8 +303,13 @@ function hideModalOverlay() {
 }
 
 function showModalOverlay() {
+    try {
+        modalOverlay.contentWindow.sanityCheck()
     modalOverlay.hidden = false
     modalOverlay.contentWindow.openPasscodeModal()
+    } catch {
+        alert("Sorry, the modal overlay is not working correctly. Try again later.\nIf you are using the \"file:\" URL scheme, please run this extension by enabling developer mode in Chrome and loading this extension unpacked. (This avoids issues with CORS, if that is the issue)")
+    }
 }
 
 emblem.addEventListener("dblclick", () => {
