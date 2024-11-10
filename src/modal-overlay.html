@@ -51,8 +51,34 @@
                     <h1 class="modal-title fs-5" id="secret-settings-label">Secret settings</h1>
                 </div>
                 <div class="modal-body">
-                    <h1>You found it!</h1>
-                    <p>There's nothing really here right now, but there will be in the future!</p>
+                    <h2>You found it!</h2>
+                    <p>If you break something using these options, you can reset them by pressing "Clear settings" on the passcode screen.</p>
+                    <div class="mb-3">
+                        <label for="font-selection" class="form-label">Font family</label>
+                        <select class="form-select" id="font-selection" aria-label="Font selection">
+                            <option value="azeret-mono" selected>Azeret Mono (default)</option>
+                            <option value="sans-serif">sans-serif (System)</option>
+                            <option value="inter">Inter</option>
+                            <option value="lato">Lato</option>
+                            <option value="montserrat">Montserrat</option>
+                            <option value="nunito">Nunito</option>
+                            <option value="poppins">Poppins</option>
+                            <option value="raleway">Raleway</option>
+                            <option value="rubik">Rubik</option>
+                        </select>
+                        <div class="form-text" id="font-selection-help">This option changes the font used on the New Tab page.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="background-selection" class="form-label">Background image</label>
+                        <select class="form-select" id="background-selection" aria-label="Background selection">
+                            <option value="seasonal" selected>Seasonal backgrounds (default)</option>
+                            <option value="bliss">Bliss - Windows XP</option>
+                            <option value="snow">Snow</option>
+                            <option value="snow-upscaled">Snow (AI upscaled)</option>
+                            <option value="street-view">Street View</option>
+                        </select>
+                        <div class="form-text" id="background-selection-help">This option changes the background used on the New Tab page. There was supposed to be some meme options here, but it probably wouldn't have gotten approved.</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="secret-settings-button-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Close without saving</button>
