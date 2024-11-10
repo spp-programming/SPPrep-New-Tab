@@ -1,4 +1,4 @@
-let calendarManager = (() => {
+const calendarManager = (() => {
     const API_KEY = "AIzaSyCOQ3EYDqe7-ypGvnNb1NZQN6Ib2eb7LG0"
     const CALENDAR_ID = "144grand@gmail.com"
     const CALENDAR_TZ = "America/New_York"
@@ -22,8 +22,8 @@ let calendarManager = (() => {
     const timeMin = `${year}-${month}-${day}T00:00:00${timeZoneOffsetISO}` // Start of the day in EST
     const timeMax = `${year}-${month}-${day}T23:59:59${timeZoneOffsetISO}` // End of the day in EST
 
-    console.log(timeMin)
-    console.log(timeMax)
+    console.log(`timeMin is ${timeMin}`)
+    console.log(`timeMax is ${timeMax}`)
 
     async function getLetterDay() {
         let todaysEvents = await getTodaysEvents()
@@ -32,14 +32,22 @@ let calendarManager = (() => {
         // Check if letterDay array is not empty
         if (todaysEvents.length > 0 && todaysEvents[0] && todaysEvents[0].summary) {
             let letterDayExtracted
+            let sanityCounter = 0
             todaysEvents.forEach(event => {
                 if (extractLetterDay(event.summary) !== "🤷‍♂️") {
+                    sanityCounter++
                     letterDayExtracted = extractLetterDay(event.summary)
                 }
             })
             if (letterDayExtracted === undefined) {
                 letterDayExtracted = "🤷‍♂️"
+            } else if (sanityCounter > 1) {
+                console.log(`sanityCounter is ${sanityCounter}`)
+                // Handle the edge case where multiple letter days are found.
+                console.error("Multiple letter days were found for today. This is most probably a bug.")
+                letterDayExtracted = "😐"
             }
+            sanityCounter = 0
             return letterDayExtracted
         } else {
             // Handle the case where no matching letter day is found
@@ -100,22 +108,22 @@ function convertOffsetToISO(offsetSeconds) {
 
 function extractLetterDay(description) {
     // Is there any way to optimize this atrocity?
-    let exactlyMatchesLetterA = ["A", "A ", " A", " A ", "A  ", "  A", "  A  "] 
-    let startsWithLetterA = ["A - Assembly", "A- Assembly", " A -Assembly", "A-Assembly", " A - Assembly", " A- Assembly", " A -Assembly", " A-Assembly", "A (Cycle", "A(Cycle", "A ( Cycle", "A( Cycle", " A (Cycle", " A(Cycle", " A (Cycle", " A(Cycle", " A ( Cycle", " A( Cycle", "A (End of MP", "A(End of MP", "A ( End of MP", "A( End of MP", " A (End of MP", " A(End of MP", " A (End of MP", " A(End of MP", " A ( End of MP", " A( End of MP"]
-    let exactlyMatchesLetterB = ["B", "B ", " B", " B ", "B  ", "  B", "  B  "]
-    let startsWithLetterB = ["B - Assembly", "B- Assembly", " B -Assembly", "B-Assembly", " B - Assembly", " B- Assembly", " B -Assembly", " B-Assembly", "B (Cycle", "B(Cycle", "B ( Cycle", "B( Cycle", " B (Cycle", " B(Cycle", " B (Cycle", " B(Cycle", " B ( Cycle", " B( Cycle", "B (End of MP", "B(End of MP", "B ( End of MP", "B( End of MP", " B (End of MP", " B(End of MP", " B (End of MP", " B(End of MP", " B ( End of MP", " B( End of MP"]
-    let exactlyMatchesLetterC = ["C", "C ", " C", " C ", "C  ", "  C", "  C  "]
-    let startsWithLetterC = ["C - Assembly", "C- Assembly", " C -Assembly", "C-Assembly", " C - Assembly", " C- Assembly", " C -Assembly", " C-Assembly", "C (Cycle", "C(Cycle", "C ( Cycle", "C( Cycle", " C (Cycle", " C(Cycle", " C (Cycle", " C(Cycle", " C ( Cycle", " C( Cycle", "C (End of MP", "C(End of MP", "C ( End of MP", "C( End of MP", " C (End of MP", " C(End of MP", " C (End of MP", " C(End of MP", " C ( End of MP", " C( End of MP"]
-    let exactlyMatchesLetterD = ["D", "D ", " D", " D ", "D  ", "  D", "  D  "]
-    let startsWithLetterD = ["D - Assembly", "D- Assembly", " D -Assembly", "D-Assembly", " D - Assembly", " D- Assembly", " D -Assembly", " D-Assembly", "D (Cycle", "D(Cycle", "D ( Cycle", "D( Cycle", " D (Cycle", " D(Cycle", " D (Cycle", " D(Cycle", " D ( Cycle", " D( Cycle", "D (End of MP", "D(End of MP", "D ( End of MP", "D( End of MP", " D (End of MP", " D(End of MP", " D (End of MP", " D(End of MP", " D ( End of MP", " D( End of MP"]
-    let exactlyMatchesLetterE = ["E", "E ", " E", " E ", "E  ", "  E", "  E  "]
-    let startsWithLetterE = ["E - Assembly", "E- Assembly", " E -Assembly", "E-Assembly", " E - Assembly", " E- Assembly", " E -Assembly", " E-Assembly", "E (Cycle", "E(Cycle", "E ( Cycle", "E( Cycle", " E (Cycle", " E(Cycle", " E (Cycle", " E(Cycle", " E ( Cycle", " E( Cycle", "E (End of MP", "E(End of MP", "E ( End of MP", "E( End of MP", " E (End of MP", " E(End of MP", " E (End of MP", " E(End of MP", " E ( End of MP", " E( End of MP"]
-    let exactlyMatchesLetterF = ["F", "F ", " F", " F ", "F  ", "  F", "  F  "]
-    let startsWithLetterF = ["F - Assembly", "F- Assembly", " F -Assembly", "F-Assembly", " F - Assembly", " F- Assembly", " F -Assembly", " F-Assembly", "F (Cycle", "F(Cycle", "F ( Cycle", "F( Cycle", " F (Cycle", " F(Cycle", " F (Cycle", " F(Cycle", " F ( Cycle", " F( Cycle", "F (End of MP", "F(End of MP", "F ( End of MP", "F( End of MP", " F (End of MP", " F(End of MP", " F (End of MP", " F(End of MP", " F ( End of MP", " F( End of MP"]
-    let exactlyMatchesLetterG = ["G", "G ", " G", " G ", "G  ", "  G", "  G  "]
-    let startsWithLetterG = ["G - Assembly", "G- Assembly", " G -Assembly", "G-Assembly", " G - Assembly", " G- Assembly", " G -Assembly", " G-Assembly", "G (Cycle", "G(Cycle", "G ( Cycle", "G( Cycle", " G (Cycle", " G(Cycle", " G (Cycle", " G(Cycle", " G ( Cycle", " G( Cycle", "G (End of MP", "G(End of MP", "G ( End of MP", "G( End of MP", " G (End of MP", " G(End of MP", " G (End of MP", " G(End of MP", " G ( End of MP", " G( End of MP"]
-    let exactlyMatchesLetterH = ["H", "H ", " H", " H ", "H  ", "  H", "  H  "]
-    let startsWithLetterH = ["H - Assembly", "H- Assembly", " H -Assembly", "H-Assembly", " H - Assembly", " H- Assembly", " H -Assembly", " H-Assembly", "H (Cycle", "H(Cycle", "H ( Cycle", "H( Cycle", " H (Cycle", " H(Cycle", " H (Cycle", " H(Cycle", " H ( Cycle", " H( Cycle", "H (End of MP", "H(End of MP", "H ( End of MP", "H( End of MP", " H (End of MP", " H(End of MP", " H (End of MP", " H(End of MP", " H ( End of MP", " H( End of MP"]
+    const exactlyMatchesLetterA = ["A", "A ", " A", " A ", "A  ", "  A", "  A  "] 
+    const startsWithLetterA = ["A - Assembly", "A- Assembly", " A -Assembly", "A-Assembly", " A - Assembly", " A- Assembly", " A -Assembly", " A-Assembly", "A (Cycle", "A(Cycle", "A ( Cycle", "A( Cycle", " A (Cycle", " A(Cycle", " A (Cycle", " A(Cycle", " A ( Cycle", " A( Cycle", "A (End of MP", "A(End of MP", "A ( End of MP", "A( End of MP", " A (End of MP", " A(End of MP", " A (End of MP", " A(End of MP", " A ( End of MP", " A( End of MP"]
+    const exactlyMatchesLetterB = ["B", "B ", " B", " B ", "B  ", "  B", "  B  "]
+    const startsWithLetterB = ["B - Assembly", "B- Assembly", " B -Assembly", "B-Assembly", " B - Assembly", " B- Assembly", " B -Assembly", " B-Assembly", "B (Cycle", "B(Cycle", "B ( Cycle", "B( Cycle", " B (Cycle", " B(Cycle", " B (Cycle", " B(Cycle", " B ( Cycle", " B( Cycle", "B (End of MP", "B(End of MP", "B ( End of MP", "B( End of MP", " B (End of MP", " B(End of MP", " B (End of MP", " B(End of MP", " B ( End of MP", " B( End of MP"]
+    const exactlyMatchesLetterC = ["C", "C ", " C", " C ", "C  ", "  C", "  C  "]
+    const startsWithLetterC = ["C - Assembly", "C- Assembly", " C -Assembly", "C-Assembly", " C - Assembly", " C- Assembly", " C -Assembly", " C-Assembly", "C (Cycle", "C(Cycle", "C ( Cycle", "C( Cycle", " C (Cycle", " C(Cycle", " C (Cycle", " C(Cycle", " C ( Cycle", " C( Cycle", "C (End of MP", "C(End of MP", "C ( End of MP", "C( End of MP", " C (End of MP", " C(End of MP", " C (End of MP", " C(End of MP", " C ( End of MP", " C( End of MP"]
+    const exactlyMatchesLetterD = ["D", "D ", " D", " D ", "D  ", "  D", "  D  "]
+    const startsWithLetterD = ["D - Assembly", "D- Assembly", " D -Assembly", "D-Assembly", " D - Assembly", " D- Assembly", " D -Assembly", " D-Assembly", "D (Cycle", "D(Cycle", "D ( Cycle", "D( Cycle", " D (Cycle", " D(Cycle", " D (Cycle", " D(Cycle", " D ( Cycle", " D( Cycle", "D (End of MP", "D(End of MP", "D ( End of MP", "D( End of MP", " D (End of MP", " D(End of MP", " D (End of MP", " D(End of MP", " D ( End of MP", " D( End of MP"]
+    const exactlyMatchesLetterE = ["E", "E ", " E", " E ", "E  ", "  E", "  E  "]
+    const startsWithLetterE = ["E - Assembly", "E- Assembly", " E -Assembly", "E-Assembly", " E - Assembly", " E- Assembly", " E -Assembly", " E-Assembly", "E (Cycle", "E(Cycle", "E ( Cycle", "E( Cycle", " E (Cycle", " E(Cycle", " E (Cycle", " E(Cycle", " E ( Cycle", " E( Cycle", "E (End of MP", "E(End of MP", "E ( End of MP", "E( End of MP", " E (End of MP", " E(End of MP", " E (End of MP", " E(End of MP", " E ( End of MP", " E( End of MP"]
+    const exactlyMatchesLetterF = ["F", "F ", " F", " F ", "F  ", "  F", "  F  "]
+    const startsWithLetterF = ["F - Assembly", "F- Assembly", " F -Assembly", "F-Assembly", " F - Assembly", " F- Assembly", " F -Assembly", " F-Assembly", "F (Cycle", "F(Cycle", "F ( Cycle", "F( Cycle", " F (Cycle", " F(Cycle", " F (Cycle", " F(Cycle", " F ( Cycle", " F( Cycle", "F (End of MP", "F(End of MP", "F ( End of MP", "F( End of MP", " F (End of MP", " F(End of MP", " F (End of MP", " F(End of MP", " F ( End of MP", " F( End of MP"]
+    const exactlyMatchesLetterG = ["G", "G ", " G", " G ", "G  ", "  G", "  G  "]
+    const startsWithLetterG = ["G - Assembly", "G- Assembly", " G -Assembly", "G-Assembly", " G - Assembly", " G- Assembly", " G -Assembly", " G-Assembly", "G (Cycle", "G(Cycle", "G ( Cycle", "G( Cycle", " G (Cycle", " G(Cycle", " G (Cycle", " G(Cycle", " G ( Cycle", " G( Cycle", "G (End of MP", "G(End of MP", "G ( End of MP", "G( End of MP", " G (End of MP", " G(End of MP", " G (End of MP", " G(End of MP", " G ( End of MP", " G( End of MP"]
+    const exactlyMatchesLetterH = ["H", "H ", " H", " H ", "H  ", "  H", "  H  "]
+    const startsWithLetterH = ["H - Assembly", "H- Assembly", " H -Assembly", "H-Assembly", " H - Assembly", " H- Assembly", " H -Assembly", " H-Assembly", "H (Cycle", "H(Cycle", "H ( Cycle", "H( Cycle", " H (Cycle", " H(Cycle", " H (Cycle", " H(Cycle", " H ( Cycle", " H( Cycle", "H (End of MP", "H(End of MP", "H ( End of MP", "H( End of MP", " H (End of MP", " H(End of MP", " H (End of MP", " H(End of MP", " H ( End of MP", " H( End of MP"]
     if (exactlyMatchesLetterA.includes(description)) {
         return "A"
     } else if (startsWithLetterA.some(substr => description.startsWith(substr))) {
@@ -150,7 +158,7 @@ function extractLetterDay(description) {
         return "H"
     } else {
         // Handle the case where no matching letter day is found
-        console.error("No letter day found in today's events.")
+        console.error(`No letter day extracted for description: ${description}`)
         return "🤷‍♂️"  // or some default value or throw an error
     }
 }
@@ -170,7 +178,7 @@ function runOncePerDay() {
     // If last execution date doesn't exist or it's different from today
     if (!lastExecutionDate || lastExecutionDate !== currentDate) {
         // Run your function here
-        console.log("Function executed once today")
+        console.log("This function is being executed once today.")
         console.log("Current date:", currentDate)
         console.log("Last Execution date: ", lastExecutionDate)
 
@@ -180,7 +188,7 @@ function runOncePerDay() {
         return
     }
     else {
-        console.log("It already executed")
+        console.log("This function has already executed today.")
         console.log("Last execution date:", lastExecutionDate)
         console.log("Current date:", currentDate)
 
@@ -195,10 +203,14 @@ function updateTime() {
     currentTime = `${d.getHours() % 12 == 0 ? 12 : d.getHours() % 12}:${d
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")} `
+        .padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")}`
+    currentTimeTitle = `The current time is: ${currentTime}`
     // Although updateTime is called every millisecond, we should only update the DOM when it's needed
     if (clockEl.innerHTML != currentTime) {
         clockEl.innerHTML = currentTime
+    }
+    if (clockEl.getAttribute("title") != currentTimeTitle) {
+        clockEl.setAttribute("title", currentTimeTitle)
     }
 }
 
@@ -221,10 +233,15 @@ async function getDate() {
     try {
         let currentLetterDay = await calendarManager.getLetterDay()
         console.log(`Current Letter Day: ${currentLetterDay}`)
-        if (currentLetterDay === "🤷‍♂️") {
-            letterDayEl.setAttribute("title", "No letter day found for today. Hit refresh to try again.")
-        } else {
-            letterDayEl.removeAttribute("title")
+        switch (currentLetterDay) {
+            case "🤷‍♂️":
+                letterDayEl.setAttribute("title", "No letter day found for today. Hit refresh to try again.")
+                break
+            case "😐":
+                letterDayEl.setAttribute("title", "Multiple letter days were found for today. This is most probably a bug.")
+                break
+            default:
+                letterDayEl.removeAttribute("title")
             currentLetterDay = `${currentLetterDay}-DAY`
         }
         letterDayEl.innerHTML = currentLetterDay
@@ -235,7 +252,7 @@ async function getDate() {
         let errorPopup = document.createElement("div")
         errorPopup.classList.add("errorPopupContainer")
         let errorPopupText = document.createElement("p")
-        errorPopupText.innerHTML = "Couldn't query School Calendar. Check your connection and refresh the page to try again"
+        errorPopupText.innerHTML = "Couldn't query School Calendar. Refresh the page to try again"
         errorPopup.appendChild(errorPopupText)
         document.body.appendChild(errorPopup)
     }
@@ -290,13 +307,18 @@ function hideModalOverlay() {
 }
 
 function showModalOverlay() {
-    modalOverlay.hidden = false
-    modalOverlay.contentWindow.openPasscodeModal()
+    try {
+        modalOverlay.contentWindow.sanityCheck()
+        modalOverlay.hidden = false
+        modalOverlay.contentWindow.openPasscodeModal()
+    } catch {
+        alert("Sorry, the modal overlay is not working correctly. Try again later.\nIf you are using the \"file:\" URL scheme, please run this extension by enabling developer mode in Chrome and loading this extension unpacked. (This avoids issues with CORS, if that is the issue)")
+    }
 }
 
 emblem.addEventListener("dblclick", () => {
     if (window.location.protocol === "file:") {
-        alert("Our mythical abilities have determined that you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, we have canceled your action to avoid issues.")
+        alert("It looks like you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, we have canceled your action to avoid issues.")
     } else {
         showModalOverlay()
     }
@@ -310,7 +332,10 @@ bellScheduleContainer.addEventListener("click", () => {
     toggleBellSchedule()
 })
 
-revealPageContent()
+window.addEventListener("load", () => {
+    revealPageContent()
+})
+
 updateTime()
 setInterval(updateTime, 1) // Calling updateTime every 1000 ms causes noticeable lag (many milliseconds) so we instead call it every millisecond to avoid this problem
 getDate()

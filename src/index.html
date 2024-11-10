@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
         <title>New Tab</title>
         <link rel="stylesheet" href="./css/style.css">
+        <link rel="preload" href="./fonts/AzeretMono-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
     </head>
     <body>
         <!-- Hack: This makes the passcode/secret settings modal work without rewriting the rest of the application to work with Bootstrap -->
@@ -19,13 +20,13 @@
             <div id="bg-gradient">
                 <div id="contentContainer">
                     <div id="content">
-                        <p id="clock">__:__:__ __</p>
+                        <p class="no-user-select" id="clock" title="Loading clock...">__:__:__ __</p>
                         <div id="dayInfoContainer">
-                            <p id="letterDay" title="Loading letter day...">🤔</p>
+                            <p class="no-user-select" id="letterDay" title="Loading letter day...">🤔</p>
                             <div id="bufferBar" style="display: none"></div>
                             <p id="date"></p>
                         </div>
-                        <div id="buttonContainer">
+                        <div class="no-user-select" id="buttonContainer">
                             <a class="iconContainer" href="https://spprep.powerschool.com/public/">
                                 <img class="icon" src="./img/icons/powerschool.png" alt="PowerSchool" title="PowerSchool">
                             </a>
@@ -45,7 +46,7 @@
                                 <img class="icon" src="./img/icons/calendar.png" alt="School Calendar" title="School Calendar">
                             </a>
                             <a class="iconContainer" href="https://membean.com/dashboard">
-                                <img class="icon" src="./img/icons/membean.png" alt="Membean">
+                                <img class="icon" src="./img/icons/membean.png" alt="Membean" title="Membean">
                             </a>
                             <a class="iconContainer" href="changelog.html" target="_blank">
                                 <img class="icon" src="./img/icons/whats_new.png" alt="What's New">
@@ -55,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <img id="emblem" src="./img/res/emblem.png" alt="Saint Peter's Prep Emblem">
+        <img class="no-user-select" id="emblem" src="./img/res/emblem.png" alt="Saint Peter's Prep Emblem">
         <div id="bellScheduleContainer">
             <img id="bellSchedule" src="./img/res/bell_schedule.webp" alt="Bell Schedule: Please see school website for accessible version">
         </div>

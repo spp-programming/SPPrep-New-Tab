@@ -148,14 +148,21 @@ passcodeModal.addEventListener("hidden.bs.modal", () => {
 secretSettingsModal.addEventListener("hidden.bs.modal", () => {
     window.parent.hideModalOverlay()
 })
+
+function sanityCheck() {
+    // This is used by newtab.js to check if the modal overlay is actually loaded, to avoid issues when the modal overlay page isn't loaded for some reason.
+    return true
+}
+
 // Hide the modal overlay when the iframe loads to avoid certain edge case issues (right click -> reload frame).
 // This also checks for the "file:" URL scheme and if the user opens the page outside of an iframe, and displays a message for each.
 if (self === top) {
     document.body.innerHTML = "<h3>This page is intended to be embedded into the new tab page.</h3><p>You can safely navigate away or close this page.</p>"
 } else {
-    if (window.location.protocol === "file:") {
-        alert("Our mythical abilities have determined that you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, features that involve iframes (like the modal popup) will not be functional.\nPlease run this extension by enabling developer mode in Chrome and loading this extension unpacked.")
-    } else {
+    try {
+        // This will emit an error if cross-origin restrictions are causing issues.
         window.parent.hideModalOverlay()
+    } catch {
+        alert("CORS permission check failed.\nIf you are using the \"file:\" URL scheme, please run this extension by enabling developer mode in Chrome and loading this extension unpacked.")
     }
 }
