@@ -144,11 +144,11 @@ passcodeModal.addEventListener("hide.bs.modal", () => {
 passcodeModal.addEventListener("hidden.bs.modal", () => {
     if (!openingSecretSettings) {
         window.parent.hideModalOverlay()
+        Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
+            element.removeAttribute("tabindex")
+        })
     }
     window.openingSecretSettings = false
-    Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
-        element.removeAttribute("tabindex")
-    })
 })
 
 secretSettingsModal.addEventListener("hidden.bs.modal", () => {
