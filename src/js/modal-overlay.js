@@ -24,6 +24,11 @@ const secretSettingsButtonClose = document.getElementById("secret-settings-butto
 const secretSettingsModalBS = new bootstrap.Modal("#secret-settings-modal")
 var openingSecretSettings = false
 
+const fontSelection = document.getElementById("font-selection")
+const backgroundSelection = document.getElementById("background-selection")
+const gradientSelection = document.getElementById("gradient-selection")
+const gradientSelectionReset = document.getElementById("gradient-selection-reset")
+
 const controllerButtonA = document.getElementById("controller-button-a")
 const controllerButtonB = document.getElementById("controller-button-b")
 const controllerButtonStart = document.getElementById("controller-button-start")
@@ -121,8 +126,7 @@ passcodeModalInputClear.addEventListener("click", () => {
 })
 
 secretSettingsButtonSave.addEventListener("click", () => {
-    secretSettingsButtonSave.disabled = "true"
-    secretSettingsButtonClose.disabled = "true"
+    saveSecretSettings()
     window.parent.location.reload()
 })
 
@@ -151,12 +155,165 @@ passcodeModal.addEventListener("hidden.bs.modal", () => {
     window.openingSecretSettings = false
 })
 
+passcodeModalSettingsClear.addEventListener("click", () => {
+    clearSecretSettings()
+    window.parent.location.reload()
+})
+
+secretSettingsModal.addEventListener("show.bs.modal", () => {
+    loadSecretSettings()
+})
+
 secretSettingsModal.addEventListener("hidden.bs.modal", () => {
     window.parent.hideModalOverlay()
     Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
         element.removeAttribute("tabindex")
     })
 })
+
+gradientSelectionReset.addEventListener("click", () => {
+    gradientSelection.value = "#9b042a"
+})
+
+function loadSecretSettings() {
+    switch (localStorage.getItem("secretSettings_fontSelection")) {
+        case "azeret-mono":
+            fontSelection.value = "azeret-mono"
+            break
+        case "sans-serif":
+            fontSelection.value = "sans-serif"
+            break
+        case "inter":
+            fontSelection.value = "inter"
+            break
+        case "lato":
+            fontSelection.value = "lato"
+            break
+        case "montserrat":
+            fontSelection.value = "montserrat"
+            break
+        case "nunito":
+            fontSelection.value = "nunito"
+            break
+        case "poppins":
+            fontSelection.value = "poppins"
+            break
+        case "raleway":
+            fontSelection.value = "raleway"
+            break
+        case "rubik":
+            fontSelection.value = "rubik"
+            break
+        default:
+            localStorage.removeItem("secretSettings_fontSelection")
+    }
+
+    switch (localStorage.getItem("secretSettings_backgroundSelection")) {
+        case "seasonal":
+            backgroundSelection.value = "seasonal"
+            break
+        case "bliss":
+            backgroundSelection.value = "bliss"
+            break
+        case "snow":
+            backgroundSelection.value = "snow"
+            break
+        case "snow-upscaled":
+            backgroundSelection.value = "snow-upscaled"
+            break
+        case "street-view":
+            backgroundSelection.value = "street-view"
+            break
+        default:
+            localStorage.removeItem("secretSettings_backgroundSelection")
+    }
+
+    if (/^#[0-9A-F]{6}$/i.test(localStorage.getItem("secretSettings_gradientSelection"))) {
+        gradientSelection.value = localStorage.getItem("secretSettings_gradientSelection")
+    } else {
+        localStorage.removeItem("secretSettings_gradientSelection")
+    }
+
+    secretSettingsButtonSave.disabled = false
+    secretSettingsButtonClose.disabled = false
+    fontSelection.disabled = false
+    backgroundSelection.disabled = false
+    gradientSelection.disabled = false
+    gradientSelectionReset.disabled = false
+}
+
+function saveSecretSettings() {
+    secretSettingsButtonSave.disabled = true
+    secretSettingsButtonClose.disabled = true
+    fontSelection.disabled = true
+    backgroundSelection.disabled = true
+    gradientSelection.disabled = true
+    gradientSelectionReset.disabled = true
+
+    switch (fontSelection.value) {
+        case "azeret-mono":
+            localStorage.setItem("secretSettings_fontSelection", "azeret-mono")
+            break
+        case "sans-serif":
+            localStorage.setItem("secretSettings_fontSelection", "sans-serif")
+            break
+        case "inter":
+            localStorage.setItem("secretSettings_fontSelection", "inter")
+            break
+        case "lato":
+            localStorage.setItem("secretSettings_fontSelection", "lato")
+            break
+        case "montserrat":
+            localStorage.setItem("secretSettings_fontSelection", "montserrat")
+            break
+        case "nunito":
+            localStorage.setItem("secretSettings_fontSelection", "nunito")
+            break
+        case "poppins":
+            localStorage.setItem("secretSettings_fontSelection", "poppins")
+            break
+        case "raleway":
+            localStorage.setItem("secretSettings_fontSelection", "raleway")
+            break
+        case "rubik":
+            localStorage.setItem("secretSettings_fontSelection", "rubik")
+            break
+        default:
+            throw Error(`Unknown value for fontSelection: ${fontSelection.value}`)
+    }
+
+    switch (backgroundSelection.value) {
+        case "seasonal":
+            localStorage.setItem("secretSettings_backgroundSelection", "seasonal")
+            break
+        case "bliss":
+            localStorage.setItem("secretSettings_backgroundSelection", "bliss")
+            break
+        case "snow":
+            localStorage.setItem("secretSettings_backgroundSelection", "snow")
+            break
+        case "snow-upscaled":
+            localStorage.setItem("secretSettings_backgroundSelection", "snow-upscaled")
+            break
+        case "street-view":
+            localStorage.setItem("secretSettings_backgroundSelection", "street-view")
+            break
+        default:
+            throw Error(`Unknown value for backgroundSelection: ${backgroundSelection.value}`)
+    }
+
+    if (/^#[0-9A-F]{6}$/i.test(gradientSelection.value)) {
+        localStorage.setItem("secretSettings_gradientSelection", gradientSelection.value)
+    } else {
+        throw Error(`Not a valid hex color code: ${gradientSelection.value}`)
+    }
+}
+
+function clearSecretSettings() {
+    localStorage.removeItem("secretSettings_fontSelection")
+    localStorage.removeItem("secretSettings_backgroundSelection")
+    localStorage.removeItem("secretSettings_gradientSelection")
+}
 
 function sanityCheck() {
     // This is used by newtab.js to check if the modal overlay is actually loaded, to avoid issues when the modal overlay page isn't loaded for some reason.

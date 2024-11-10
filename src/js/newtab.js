@@ -78,12 +78,6 @@ const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
 const modalOverlay = document.getElementById("modal-overlay")
 const emblem = document.getElementById("emblem")
 
-// Global variable
-document.documentElement.style.setProperty(
-    "--season-background",
-    "MSCBuilding.jpg"
-)
-
 function convertOffsetToISO(offsetSeconds) {
     let newOffset
     let offsetAbsoluteSeconds = Math.abs(offsetSeconds)
@@ -258,7 +252,7 @@ async function getDate() {
     }
 }
 
-function changeBackground(month) {
+function changeSeasonalBackground(month) {
     month += 1
     let imageUrl
     if (month == 12 || month <= 2) {
@@ -275,7 +269,7 @@ function changeBackground(month) {
         imageUrl = "../img/MSCBuildingFallWinter.webp"
     }
     document.documentElement.style.setProperty(
-        "--season-background",
+        "--background-seasonal",
         `url("${imageUrl}")`
     )
 }
@@ -324,6 +318,64 @@ function showModalOverlay() {
     }
 }
 
+function applySecretSettings() {
+    switch (localStorage.getItem("secretSettings_fontSelection")) {
+        case "sans-serif":
+            document.documentElement.style.setProperty("--selected-font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
+            break
+        case "inter":
+            document.documentElement.style.setProperty("--selected-font-family", "Inter, sans-serif")
+            break
+        case "lato":
+            document.documentElement.style.setProperty("--selected-font-family", "Lato, sans-serif")
+            break
+        case "montserrat":
+            document.documentElement.style.setProperty("--selected-font-family", "Montserrat, sans-serif")
+            break
+        case "nunito":
+            document.documentElement.style.setProperty("--selected-font-family", "Nunito, sans-serif")
+            break
+        case "poppins":
+            document.documentElement.style.setProperty("--selected-font-family", "Poppins, sans-serif")
+            break
+        case "raleway":
+            document.documentElement.style.setProperty("--selected-font-family", "Raleway, sans-serif")
+            break
+        case "rubik":
+            document.documentElement.style.setProperty("--selected-font-family", "Rubik, sans-serif")
+            break
+        default:
+            localStorage.removeItem("secretSettings_fontSelection")
+    }
+
+    switch (localStorage.getItem("secretSettings_backgroundSelection")) {
+        case "bliss":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/bliss_windows_xp.webp)")
+            break
+        case "snow":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/snow.webp)")
+            break
+        case "snow-upscaled":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/snow_upscaled.webp)")
+            break
+        case "street-view":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/street_view.webp)")
+            break
+        default:
+            document.documentElement.style.setProperty("--selected-background", "var(--background-seasonal)")
+            localStorage.removeItem("secretSettings_backgroundSelection")
+    }
+
+    if (localStorage.getItem("secretSettings_gradientSelection") === "#9b042a") {
+        localStorage.removeItem("secretSettings_gradientSelection")
+    }
+    if (/^#[0-9A-F]{6}$/i.test(localStorage.getItem("secretSettings_gradientSelection"))) {
+        document.documentElement.style.setProperty("--selected-gradient", localStorage.getItem("secretSettings_gradientSelection"))
+    } else {
+        localStorage.removeItem("secretSettings_gradientSelection")
+    }
+}
+
 emblem.addEventListener("dblclick", () => {
     if (window.location.protocol === "file:") {
         alert("It looks like you are running this extension's page locally using the \"file:\" URL scheme.\nSince browsers consider pages on the local filesystem as from separate origins, we have canceled your action to avoid issues.")
@@ -341,6 +393,8 @@ bellScheduleContainer.addEventListener("click", () => {
 })
 
 window.addEventListener("load", () => {
+    changeSeasonalBackground((new Date).getMonth)
+    applySecretSettings()
     revealPageContent()
 })
 

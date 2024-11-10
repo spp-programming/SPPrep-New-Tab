@@ -21,7 +21,7 @@
                     <p>Enter the passcode using the controls below, then press "Check passcode"</p>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control has-icons" id="passcode-modal-input" placeholder="Use these controls 👇" minlength="10" maxlength="10" aria-hidden="true" disabled>
-                        <button class="btn btn-outline-secondary" type="button" id="passcode-modal-input-clear"><i class="bi bi-x-lg"></i> Clear passcode</button>
+                        <button class="btn btn-outline-secondary" type="button" id="passcode-modal-input-clear" title="Clear the passcode entry box."><i class="bi bi-x-lg"></i> Clear passcode</button>
                     </div>
                     <img src="img/Nes_controller.svg" class="user-select-none img-fluid" id="controller-image" alt="Nintendo NES controller" draggable="false" usemap="#controller-image-map">
                     <map name="controller-image-map">
@@ -34,12 +34,12 @@
                         <area target="_self" alt="Down" href="#" title="Down" id="controller-button-down" coords="81,167,121,208" shape="rect">
                         <area target="_self" alt="Left" href="#" title="Left" id="controller-button-left" coords="43,129,83,169" shape="rect">
                     </map>
-                    <p>Image by <a href="https://commons.wikimedia.org/w/index.php?title=User:Fant0men" target="_blank">User:Fant0men on Wikimedia Commons</a>, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=2378328" target="_blank">https://commons.wikimedia.org/w/index.php?curid=2378328</a></p>
+                    <span class="form-text">Image by <a href="https://commons.wikimedia.org/w/index.php?title=User:Fant0men" target="_blank">User:Fant0men on Wikimedia Commons</a>, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=2378328" target="_blank">https://commons.wikimedia.org/w/index.php?curid=2378328</a></span>
                     <div id="passcode-modal-alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger me-auto" id="passcode-modal-settings-clear"><i class="bi bi-stars"></i> Clear settings</button>
-                    <button type="button" class="btn btn-primary" id="passcode-modal-verify"><i class="bi bi-key"></i> Check passcode</button>
+                    <button type="button" class="btn btn-danger me-auto" id="passcode-modal-settings-clear" title="Clear all secret settings, then refresh the page."><i class="bi bi-stars"></i> Clear settings</button>
+                    <button type="button" class="btn btn-primary" id="passcode-modal-verify" title="Check the passcode, and continue if it is correct."><i class="bi bi-key"></i> Check passcode</button>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                     <p>If you break something using these options, you can reset them by pressing "Clear settings" on the passcode screen.</p>
                     <div class="mb-3">
                         <label for="font-selection" class="form-label">Font family</label>
-                        <select class="form-select" id="font-selection" aria-label="Font selection">
+                        <select class="form-select" id="font-selection" aria-label="Font selection" disabled>
                             <option value="azeret-mono" selected>Azeret Mono (default)</option>
                             <option value="sans-serif">sans-serif (System)</option>
                             <option value="inter">Inter</option>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="background-selection" class="form-label">Background image</label>
-                        <select class="form-select" id="background-selection" aria-label="Background selection">
+                        <select class="form-select" id="background-selection" aria-label="Background selection" disabled>
                             <option value="seasonal" selected>Seasonal backgrounds (default)</option>
                             <option value="bliss">Bliss - Windows XP</option>
                             <option value="snow">Snow</option>
@@ -79,10 +79,18 @@
                         </select>
                         <div class="form-text" id="background-selection-help">This option changes the background used on the New Tab page. There was supposed to be some meme options here, but it probably wouldn't have gotten approved.</div>
                     </div>
+                    <div class="mb-3">
+                        <label for="gradient-selection" class="form-label">Gradient color</label>
+                        <div class="input-group">
+                            <input type="color" class="form-control form-control-color" id="gradient-selection" value="#9b042a" title="Choose your preferred color." disabled>
+                            <button type="button" class="btn btn-outline-secondary" id="gradient-selection-reset" disabled><i class="bi bi-arrow-left"></i> Use default color: #9b042a</button>
+                        </div>
+                        <div class="form-text" id="gradient-selection-help">This option changes the gradient color used on the New Tab page. You can't configure transparency.</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="secret-settings-button-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Close without saving</button>
-                    <button type="button" class="btn btn-primary" id="secret-settings-button-save"><i class="bi bi-save"></i> Save and refresh</button>
+                    <button type="button" class="btn btn-danger" id="secret-settings-button-close" data-bs-dismiss="modal" disabled><i class="bi bi-x-lg"></i> Close without saving</button>
+                    <button type="button" class="btn btn-primary" id="secret-settings-button-save" disabled><i class="bi bi-save"></i> Save and refresh</button>
                 </div>
             </div>
         </div>
