@@ -66,6 +66,9 @@ function passcodeClear() {
 }
 
 function openPasscodeModal() {
+    Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
+        element.tabIndex = "-1"
+    })
     passcodeModalBS.show()
 }
 
@@ -143,10 +146,16 @@ passcodeModal.addEventListener("hidden.bs.modal", () => {
         window.parent.hideModalOverlay()
     }
     window.openingSecretSettings = false
+    Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
+        element.removeAttribute("tabindex")
+    })
 })
 
 secretSettingsModal.addEventListener("hidden.bs.modal", () => {
     window.parent.hideModalOverlay()
+    Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
+        element.removeAttribute("tabindex")
+    })
 })
 
 function sanityCheck() {
