@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: 600;
     font-display: swap;
-    src: url("../fonts/AzeretMono-VariableFont_wght.ttf") format("truetype");
+    src: url("../fonts/AzeretMono/AzeretMono-VariableFont_wght.ttf") format("truetype");
 }
 
 body {
