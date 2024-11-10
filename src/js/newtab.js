@@ -203,10 +203,14 @@ function updateTime() {
     currentTime = `${d.getHours() % 12 == 0 ? 12 : d.getHours() % 12}:${d
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")} `
+        .padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")}`
+    currentTimeTitle = `The current time is: ${currentTime}`
     // Although updateTime is called every millisecond, we should only update the DOM when it's needed
     if (clockEl.innerHTML != currentTime) {
         clockEl.innerHTML = currentTime
+    }
+    if (clockEl.getAttribute("title") != currentTimeTitle) {
+        clockEl.setAttribute("title", currentTimeTitle)
     }
 }
 
