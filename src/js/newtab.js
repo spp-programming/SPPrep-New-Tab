@@ -296,6 +296,14 @@ async function toggleBellSchedule() {
     bellScheduleShown = !bellScheduleShown
 }
 
+document.addEventListener("keydown", (e) => {
+    if (!e.repeat && e.key === "Escape" ) {
+        if (bellScheduleShown) {
+            toggleBellSchedule()
+        }
+    }
+})
+
 function revealPageContent() {
     // Reveal the main element only when the page is fully loaded (FOUC workaround)
     const pageContent = document.getElementById("bg-image")
