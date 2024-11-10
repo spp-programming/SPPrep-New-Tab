@@ -22,8 +22,8 @@ const calendarManager = (() => {
     const timeMin = `${year}-${month}-${day}T00:00:00${timeZoneOffsetISO}` // Start of the day in EST
     const timeMax = `${year}-${month}-${day}T23:59:59${timeZoneOffsetISO}` // End of the day in EST
 
-    console.log(timeMin)
-    console.log(timeMax)
+    console.log(`timeMin is ${timeMin}`)
+    console.log(`timeMax is ${timeMax}`)
 
     async function getLetterDay() {
         let todaysEvents = await getTodaysEvents()
@@ -150,7 +150,7 @@ function extractLetterDay(description) {
         return "H"
     } else {
         // Handle the case where no matching letter day is found
-        console.error("No letter day found in today's events.")
+        console.error(`No letter day extracted for description: ${description}`)
         return "🤷‍♂️"  // or some default value or throw an error
     }
 }
@@ -170,7 +170,7 @@ function runOncePerDay() {
     // If last execution date doesn't exist or it's different from today
     if (!lastExecutionDate || lastExecutionDate !== currentDate) {
         // Run your function here
-        console.log("Function executed once today")
+        console.log("This function is being executed once today.")
         console.log("Current date:", currentDate)
         console.log("Last Execution date: ", lastExecutionDate)
 
@@ -180,7 +180,7 @@ function runOncePerDay() {
         return
     }
     else {
-        console.log("It already executed")
+        console.log("This function has already executed today.")
         console.log("Last execution date:", lastExecutionDate)
         console.log("Current date:", currentDate)
 
@@ -235,7 +235,7 @@ async function getDate() {
         let errorPopup = document.createElement("div")
         errorPopup.classList.add("errorPopupContainer")
         let errorPopupText = document.createElement("p")
-        errorPopupText.innerHTML = "Couldn't query School Calendar. Check your connection and refresh the page to try again"
+        errorPopupText.innerHTML = "Couldn't query School Calendar. Refresh the page to try again"
         errorPopup.appendChild(errorPopupText)
         document.body.appendChild(errorPopup)
     }
