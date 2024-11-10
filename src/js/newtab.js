@@ -235,13 +235,13 @@ async function getDate() {
         console.log(`Current Letter Day: ${currentLetterDay}`)
         switch (currentLetterDay) {
             case "🤷‍♂️":
-            letterDayEl.setAttribute("title", "No letter day found for today. Hit refresh to try again.")
+                letterDayEl.setAttribute("title", "No letter day found for today. Hit refresh to try again.")
                 break
             case "😐":
                 letterDayEl.setAttribute("title", "Multiple letter days were found for today. This is most probably a bug.")
                 break
             default:
-            letterDayEl.removeAttribute("title")
+                letterDayEl.removeAttribute("title")
             currentLetterDay = `${currentLetterDay}-DAY`
         }
         letterDayEl.innerHTML = currentLetterDay
@@ -309,8 +309,8 @@ function hideModalOverlay() {
 function showModalOverlay() {
     try {
         modalOverlay.contentWindow.sanityCheck()
-    modalOverlay.hidden = false
-    modalOverlay.contentWindow.openPasscodeModal()
+        modalOverlay.hidden = false
+        modalOverlay.contentWindow.openPasscodeModal()
     } catch {
         alert("Sorry, the modal overlay is not working correctly. Try again later.\nIf you are using the \"file:\" URL scheme, please run this extension by enabling developer mode in Chrome and loading this extension unpacked. (This avoids issues with CORS, if that is the issue)")
     }
@@ -332,7 +332,10 @@ bellScheduleContainer.addEventListener("click", () => {
     toggleBellSchedule()
 })
 
-revealPageContent()
+window.addEventListener("load", () => {
+    revealPageContent()
+})
+
 updateTime()
 setInterval(updateTime, 1) // Calling updateTime every 1000 ms causes noticeable lag (many milliseconds) so we instead call it every millisecond to avoid this problem
 getDate()
