@@ -224,6 +224,9 @@ function loadSecretSettings() {
         case "street-view":
             backgroundSelection.value = "street-view"
             break
+        case "street-view-better":
+            backgroundSelection.value = "street-view-better"
+            break
         default:
             localStorage.removeItem("secretSettings_backgroundSelection")
     }
@@ -297,6 +300,9 @@ function saveSecretSettings() {
             break
         case "street-view":
             localStorage.setItem("secretSettings_backgroundSelection", "street-view")
+            break
+        case "street-view-better":
+            localStorage.setItem("secretSettings_backgroundSelection", "street-view-better")
             break
         default:
             throw Error(`Unknown value for backgroundSelection: ${backgroundSelection.value}`)

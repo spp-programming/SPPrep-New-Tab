@@ -361,6 +361,9 @@ function applySecretSettings() {
         case "street-view":
             document.documentElement.style.setProperty("--selected-background", "url(../img/secret/street_view.webp)")
             break
+        case "street-view-better":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/street_view_better.webp)")
+            break
         default:
             document.documentElement.style.setProperty("--selected-background", "var(--background-seasonal)")
             localStorage.removeItem("secretSettings_backgroundSelection")
