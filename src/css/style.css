@@ -57,7 +57,7 @@
 
 :root {
     --selected-font-family: "Azeret Mono", monospace;
-    --selected-background: url("../img/MSCBuildingSpringSummer.webp");
+    --selected-background: url("../img/spring_summer.webp");
     --selected-gradient: rgba(155, 4, 43, 1);
 }  
 

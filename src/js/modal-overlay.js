@@ -28,6 +28,7 @@ const fontSelection = document.getElementById("font-selection")
 const backgroundSelection = document.getElementById("background-selection")
 const gradientSelection = document.getElementById("gradient-selection")
 const gradientSelectionReset = document.getElementById("gradient-selection-reset")
+const backgroundPreview = document.getElementById("background-preview")
 
 const controllerButtonA = document.getElementById("controller-button-a")
 const controllerButtonB = document.getElementById("controller-button-b")
@@ -82,6 +83,23 @@ function openSecretSettingsModal() {
     window.openingSecretSettings = true
     passcodeModalBS.hide()
     secretSettingsModalBS.show()
+}
+
+function getSeasonalBackground(month) {
+    month += 1
+    if (month == 12 || month <= 2) {
+        // WINTER
+        return "./img/fall_winter.webp"
+    } else if (month >= 3 && month <= 5) {
+        // SPRING
+        return "./img/spring_summer.webp"
+    } else if (month >= 6 && month <= 9) {
+        // SUMMER
+        return "./img/spring_summer.webp"
+    } else {
+        // FALL
+        return "./img/fall_winter.webp"
+    }
 }
 
 // Using onclick listeners in the HTML causes CSP violations. I actually fixed the issue without a hack. You can thank me :)
@@ -140,12 +158,9 @@ passcodeModal.addEventListener("shown.bs.modal", () => {
     imageMapResize()
 })
 
-passcodeModal.addEventListener("hide.bs.modal", () => {
+passcodeModal.addEventListener("hidden.bs.modal", () => {
     passcodeClear()
     passcodeVerifyError(false)
-})
-
-passcodeModal.addEventListener("hidden.bs.modal", () => {
     if (!openingSecretSettings) {
         window.parent.hideModalOverlay()
         Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
@@ -162,18 +177,62 @@ passcodeModalSettingsClear.addEventListener("click", () => {
 
 secretSettingsModal.addEventListener("show.bs.modal", () => {
     loadSecretSettings()
+    updateBackgroundPreview()
+    backgroundPreview.hidden = false
 })
 
-secretSettingsModal.addEventListener("hidden.bs.modal", () => {
-    window.parent.hideModalOverlay()
+secretSettingsModal.addEventListener("hide.bs.modal", () => {
     Array.from(window.parent.document.getElementsByClassName("iconContainer")).forEach(element => {
         element.removeAttribute("tabindex")
     })
 })
 
+secretSettingsModal.addEventListener("hidden.bs.modal", () => {
+    window.parent.hideModalOverlay()
+    fontSelection.value = "azeret-mono"
+    backgroundSelection.value = "seasonal"
+    gradientSelection.value = "#9b042a"
+})
+
 gradientSelectionReset.addEventListener("click", () => {
     gradientSelection.value = "#9b042a"
 })
+
+backgroundSelection.addEventListener("change", () => {
+    backgroundPreview.hidden = false
+    updateBackgroundPreview()
+})
+
+function updateBackgroundPreview() {
+    switch (backgroundSelection.value) {
+        case "seasonal":
+            backgroundPreview.setAttribute("src", getSeasonalBackground((new Date()).getMonth))
+            break
+        case "bliss":
+            backgroundPreview.setAttribute("src", "./img/secret/bliss_windows_xp.webp")
+            break
+        case "msc-building":
+            backgroundPreview.setAttribute("src", "./img/spring_summer.webp")
+            break
+        case "snow":
+            backgroundPreview.setAttribute("src", "./img/fall_winter.webp")
+            break
+        case "snow-low-quality":
+            backgroundPreview.setAttribute("src", "./img/secret/snow_low_quality.webp")
+            break
+        case "original-fall-winter":
+            backgroundPreview.setAttribute("src", "./img/secret/original_fall_winter.webp")
+            break
+        case "street-view":
+            backgroundPreview.setAttribute("src", "./img/secret/street_view.webp")
+            break
+        case "street-view-better":
+            backgroundPreview.setAttribute("src", "./img/secret/street_view_better.webp")
+            break
+        default:
+            backgroundPreview.hidden = true
+    }
+}
 
 function loadSecretSettings() {
     switch (localStorage.getItem("secretSettings_fontSelection")) {
@@ -215,11 +274,17 @@ function loadSecretSettings() {
         case "bliss":
             backgroundSelection.value = "bliss"
             break
+        case "msc-building":
+            backgroundSelection.value = "msc-building"
+            break
         case "snow":
             backgroundSelection.value = "snow"
             break
-        case "snow-upscaled":
-            backgroundSelection.value = "snow-upscaled"
+        case "snow-low-quality":
+            backgroundSelection.value = "snow-low-quality"
+            break
+        case "original-fall-winter":
+            backgroundSelection.value = "original-fall-winter"
             break
         case "street-view":
             backgroundSelection.value = "street-view"
@@ -292,11 +357,17 @@ function saveSecretSettings() {
         case "bliss":
             localStorage.setItem("secretSettings_backgroundSelection", "bliss")
             break
+        case "msc-building":
+            localStorage.setItem("secretSettings_backgroundSelection", "msc-building")
+            break
         case "snow":
             localStorage.setItem("secretSettings_backgroundSelection", "snow")
             break
-        case "snow-upscaled":
-            localStorage.setItem("secretSettings_backgroundSelection", "snow-upscaled")
+        case "snow-low-quality":
+            localStorage.setItem("secretSettings_backgroundSelection", "snow-low-quality")
+            break
+        case "original-fall-winter":
+            localStorage.setItem("secretSettings_backgroundSelection", "original-fall-winter")
             break
         case "street-view":
             localStorage.setItem("secretSettings_backgroundSelection", "street-view")

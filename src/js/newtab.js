@@ -72,7 +72,6 @@ const calendarManager = (() => {
 
 const clockEl = document.querySelector("#clock")
 const letterDayEl = document.querySelector("#letterDay")
-const dateEl = document.querySelector("#date")
 const bellScheduleButton = document.getElementById("bell-schedule-button")
 const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
 const modalOverlay = document.getElementById("modal-overlay")
@@ -209,21 +208,6 @@ function updateTime() {
 }
 
 async function getDate() {
-    // let d = new Date()
-    // changeBackground(d.getMonth())
-
-    // let response = await fetch("../schoolCalender.json")
-    // let dayData
-    // if (response.ok) {
-    //     let data = await response.json()
-    //     let dateId = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
-    //     dayData = data.find((e) => e.date == dateId)
-    // }
-    // if (dayData != undefined) {
-    //     letterDayEl.innerHTML = dayData.letter + " - DAY"
-    //     document.querySelector("#bufferBar").style.display = "block"
-    // }
-    // dateEl.innerHTML = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`
     try {
         let currentLetterDay = await calendarManager.getLetterDay()
         console.log(`Current Letter Day: ${currentLetterDay}`)
@@ -235,7 +219,7 @@ async function getDate() {
                 letterDayEl.setAttribute("title", "Multiple letter days were found for today. This is most probably a bug.")
                 break
             default:
-                letterDayEl.removeAttribute("title")
+                letterDayEl.setAttribute("title", `It is an ${currentLetterDay}-DAY. Last updated on: ${(new Date()).toLocaleString()}`)
             currentLetterDay = `${currentLetterDay}-DAY`
         }
         letterDayEl.innerHTML = currentLetterDay
@@ -257,16 +241,16 @@ function changeSeasonalBackground(month) {
     let imageUrl
     if (month == 12 || month <= 2) {
         // WINTER
-        imageUrl = "../img/MSCBuildingFallWinter.webp"
+        imageUrl = "../img/fall_winter.webp"
     } else if (month >= 3 && month <= 5) {
         // SPRING
-        imageUrl = "../img/MSCBuildingSpringSummer.webp"
+        imageUrl = "../img/spring_summer.webp"
     } else if (month >= 6 && month <= 9) {
         // SUMMER
-        imageUrl = "../img/MSCBuildingSpringSummer.webp"
+        imageUrl = "../img/spring_summer.webp"
     } else {
         // FALL
-        imageUrl = "../img/MSCBuildingFallWinter.webp"
+        imageUrl = "../img/fall_winter.webp"
     }
     document.documentElement.style.setProperty(
         "--background-seasonal",
@@ -352,11 +336,17 @@ function applySecretSettings() {
         case "bliss":
             document.documentElement.style.setProperty("--selected-background", "url(../img/secret/bliss_windows_xp.webp)")
             break
-        case "snow":
-            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/snow.webp)")
+        case "msc-building":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/spring_summer.webp)")
             break
-        case "snow-upscaled":
-            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/snow_upscaled.webp)")
+        case "snow":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/fall_winter.webp)")
+            break
+        case "snow-low-quality":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/snow_low_quality.webp)")
+            break
+        case "original-fall-winter":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/original_fall_winter.webp)")
             break
         case "street-view":
             document.documentElement.style.setProperty("--selected-background", "url(../img/secret/street_view.webp)")
