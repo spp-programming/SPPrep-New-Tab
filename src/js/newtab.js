@@ -220,7 +220,7 @@ async function getDate() {
                 letterDayEl.setAttribute("title", "Multiple letter days were found for today. This is most probably a bug.")
                 break
             default:
-                letterDayEl.setAttribute("title", `It is an ${currentLetterDay}-DAY. Last updated on: ${(new Date()).toLocaleString()}`)
+                letterDayEl.setAttribute("title", `The current letter day is ${currentLetterDay}-DAY. Last updated on: ${(new Date()).toLocaleString()} (refresh to update)`)
             currentLetterDay = `${currentLetterDay}-DAY`
         }
         letterDayEl.innerHTML = currentLetterDay
