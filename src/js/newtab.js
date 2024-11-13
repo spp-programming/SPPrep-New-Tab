@@ -72,6 +72,7 @@ const calendarManager = (() => {
 
 const clockEl = document.querySelector("#clock")
 const letterDayEl = document.querySelector("#letterDay")
+const iconContainerIcons = document.getElementsByClassName("iconContainer")
 const bellScheduleButton = document.getElementById("bell-schedule-button")
 const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
 const modalOverlay = document.getElementById("modal-overlay")
@@ -262,10 +263,16 @@ async function toggleBellSchedule() {
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
     console.log("Toggle: Bell Schedule")
     if (!bellScheduleShown) {
+        Array.from(iconContainerIcons).forEach(element => {
+            element.tabIndex = "-1"
+        })
         bellScheduleContainer.style.display = "flex"
         bellScheduleContainer.style.opacity = "1"
         await sleep(250)
     } else {
+        Array.from(iconContainerIcons).forEach(element => {
+            element.removeAttribute("tabindex")
+        })
         bellScheduleContainer.style.opacity = "0"
         await sleep(250)
         bellScheduleContainer.style.display = "none"
