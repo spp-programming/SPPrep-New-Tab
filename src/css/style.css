@@ -2,12 +2,67 @@
     font-family: "Azeret Mono";
     font-style: normal;
     font-weight: 600;
-    font-display: swap;
-    src: url("../fonts/AzeretMono-VariableFont_wght.ttf") format("truetype");
+    font-display: block;
+    src: url("../fonts/AzeretMono/AzeretMono-VariableFont_wght.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Inter/Inter-VariableFont_opsz\,wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Lato";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Lato/Lato-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Nunito/Nunito-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Raleway";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Raleway/Raleway-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Rubik";
+    font-style: normal;
+    font-display: block;
+    src: url("../fonts/Rubik/Rubik-VariableFont_wght.ttf") format("truetype");
+}
+
+:root {
+    --selected-font-family: "Azeret Mono", monospace;
+    --selected-background: url("../img/spring_summer.webp");
+    --selected-gradient: rgba(155, 4, 43, 1);
+}  
+
 body {
-    font-family: "Azeret Mono", monospace;
+    font-family: var(--selected-font-family);
     font-weight: bold;
     margin: 0;
     display: flex;
@@ -33,7 +88,7 @@ body {
 }
 
 #bg-image {
-    background-image: url("../img/MSCBuildingSpringSummer.webp");
+    background-image: var(--selected-background);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -44,7 +99,7 @@ body {
     background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.2) 20%,
-        rgba(155, 4, 43, 1) 120%
+        var(--selected-gradient) 120%
     );
     content: "";
     width: 100%;
@@ -60,7 +115,6 @@ body {
 }
 
 #content {
-    display: felx;
     justify-content: center;
     align-items: center;
 }
@@ -156,4 +210,9 @@ body {
 
 .errorPopupContainer > p {
     text-align: center;
+}
+
+.no-user-select {
+    user-select: none;
+    -webkit-user-select: none; /* Does Safari support matter in a Chrome extension? I think it does. */
 }
