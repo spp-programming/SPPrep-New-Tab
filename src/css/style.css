@@ -109,6 +109,7 @@ body {
 
 #clock {
     font-size: 6rem;
+    font-feature-settings: "tnum"; /* This prevents the clock from randomly shifting around. */
     text-align: center;
     margin: 0;
     padding: 0;
