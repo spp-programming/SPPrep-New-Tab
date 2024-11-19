@@ -1,13 +1,15 @@
+const primaryTimeZone = "America/New_York"
+const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 const calendarManager = (() => {
     const API_KEY = "AIzaSyCOQ3EYDqe7-ypGvnNb1NZQN6Ib2eb7LG0"
     const CALENDAR_ID = "144grand@gmail.com"
-    const CALENDAR_TZ = "America/New_York"
+    const CALENDAR_TZ = primaryTimeZone
 
     // Get the current date in UTC
     const currentDateUTC = new Date()
 
     // Get the time zone offset in minutes for the current date
-    const timeZoneOffsetMinutes = currentDateUTC.getTimezoneOffset()
+    const timeZoneOffsetMinutes = getTimeZoneOffsetFromName(CALENDAR_TZ)
 
     // Convert the current date to EST by adjusting according to timezone offset
     const timeZoneOffset = -timeZoneOffsetMinutes // EST offset in minutes
@@ -77,6 +79,19 @@ const bellScheduleButton = document.getElementById("bell-schedule-button")
 const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
 const modalOverlay = document.getElementById("modal-overlay")
 const emblem = document.getElementById("emblem")
+
+// Stolen from https://stackoverflow.com/a/68593283
+function getTimeZoneOffsetFromName(timeZone) {
+    const date = new Date()
+    const utcDate = new Date(date.toLocaleString("en-US", { timeZone: "UTC" }))
+    const tzDate = new Date(date.toLocaleString("en-US", { timeZone }))
+    // This is the worst code I have written.
+    if (-(tzDate.getTime() - utcDate.getTime()) === -0) {
+        return 0
+    } else {
+        return -(tzDate.getTime() - utcDate.getTime()) / 6e4
+    }
+}
 
 function convertOffsetToISO(offsetSeconds) {
     let newOffset
@@ -220,7 +235,13 @@ async function getDate() {
                 letterDayEl.setAttribute("title", "Multiple letter days were found for today. This is most probably a bug.")
                 break
             default:
-                letterDayEl.setAttribute("title", `The current letter day is ${currentLetterDay}-DAY. Last updated on: ${(new Date()).toLocaleString()} (refresh to update)`)
+                // "US/Eastern" and "EST5EDT" are linked to "America/New_York" so we have to check for them too. This may not be necessary, but I don't care. https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+                if (currentTimeZone == "America/New_York" || currentTimeZone == "US/Eastern" || currentTimeZone == "EST5EDT") {
+                    letterDayEl.setAttribute("title", `The current letter day is ${currentLetterDay}-DAY. Last updated on: ${(new Date()).toLocaleString("en-US")} (refresh to update)`)
+                } else {
+                    letterDayEl.setAttribute("title", `⚠️ This letter day is based on Prep's time zone, which doesn't match yours (${currentTimeZone})\nThe current letter day is ${currentLetterDay}-DAY. Last updated on: ${(new Date()).toLocaleString()} (your local time, refresh to update)`)
+                    currentLetterDay = `⚠️ ${currentLetterDay}`
+                }
             currentLetterDay = `${currentLetterDay}-DAY`
         }
         letterDayEl.innerHTML = currentLetterDay

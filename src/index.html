@@ -13,7 +13,7 @@
     </head>
     <body>
         <!-- Hack: This makes the passcode/secret settings modal work without rewriting the rest of the application to work with Bootstrap -->
-        <iframe id="modal-overlay" src="modal-overlay.html" hidden></iframe>
+        <iframe class="no-user-select" id="modal-overlay" src="modal-overlay.html" hidden></iframe>
         <!-- Hide the main element until the page is fully loaded (FOUC workaround) -->
         <div id="bg-image" hidden>
             <div id="bg-gradient">
