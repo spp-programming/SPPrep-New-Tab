@@ -155,8 +155,10 @@ body {
 #buttonContainer {
     display: flex;
     align-items: center;
+    align-content: flex-start;
     justify-content: center;
-    gap: 0.01%;
+    /* 40px would be more accurate but 30px looks better. https://youtu.be/i7ZW4_cbII8 */
+    row-gap: 30px;
     width: 95vw;
     flex-wrap: wrap;
 }
