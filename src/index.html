@@ -14,6 +14,9 @@
     <body>
         <!-- Hack: This makes the passcode/secret settings modal work without rewriting the rest of the application to work with Bootstrap -->
         <iframe class="no-user-select" id="modal-overlay" src="modal-overlay.html" hidden></iframe>
+        <!-- Clippy support via shadow DOM -->
+        <div id="clippy-container"></div>
+        <!-- <iframe class="no-user-select" id="clippy" src="clippy.html"></iframe> -->
         <!-- Hide the main element until the page is fully loaded (FOUC workaround) -->
         <div id="bg-image" hidden>
             <div id="bg-gradient">
@@ -61,5 +64,6 @@
             <img id="bellSchedule" src="./img/res/bell_schedule.webp" alt="Bell Schedule: Please see school website for accessible version">
         </div>
         <script src="js/newtab.js"></script>
+        <script src="js/clippy-helper.js"></script>
     </body>
 </html>

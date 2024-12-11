@@ -78,6 +78,13 @@ body {
     z-index: 100;
 }
 
+#clippy-container {
+    border: 0em;
+    background-color: transparent;
+    position: fixed;
+    z-index: 90;
+}
+
 #contentContainer {
     display: flex;
     justify-content: center;

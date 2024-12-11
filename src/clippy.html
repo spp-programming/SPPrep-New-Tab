@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Clippy™</title>
+    <link rel="stylesheet" href="css/thirdparty/bootstrap.min.css">
+</head>
+<body>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="max-width: 250px;">
+        <div id="clippy-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+            <div class="toast-header">
+                <strong class="me-auto">Clippy&trade;</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <img src="img/res/clippy/clippy.png" class="card-img-top" id="clippy-image" alt="Clippy">
+                <p class="card-text" id="clippy-message">It looks like you're a Prep student. Would you like some help?</p>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-primary" id="button-yes">Help me!</button>
+                    <button type="button" class="btn btn-secondary" id="button-no">No, thanks.</button>
+                    <button type="button" class="btn btn-outline-secondary" id="button-back" hidden disabled>Go back</button>
+                    <button type="button" class="btn btn-primary" id="button-navigation" hidden disabled>Navigation</button>
+                    <button type="button" class="btn btn-primary" id="button-secret" hidden disabled>Secret Settings</button>
+                    <button type="button" class="btn btn-primary" id="button-other" hidden disabled>Something else...</button>
+                    <button type="button" class="btn btn-outline-secondary" id="button-exit" hidden disabled>Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/thirdparty/bootstrap.bundle.min.js"></script>
+    <script src="js/clippy.js"></script>
+</body>
+</html>
