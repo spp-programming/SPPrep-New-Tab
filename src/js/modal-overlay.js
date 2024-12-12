@@ -30,6 +30,7 @@ const gradientSelection = document.getElementById("gradient-selection")
 const gradientSelectionReset = document.getElementById("gradient-selection-reset")
 const fontPreview = document.getElementById("font-preview")
 const backgroundPreview = document.getElementById("background-preview")
+const backgroundPreviewNotes = document.getElementById("background-preview-notes")
 
 const controllerButtonA = document.getElementById("controller-button-a")
 const controllerButtonB = document.getElementById("controller-button-b")
@@ -181,6 +182,7 @@ secretSettingsModal.addEventListener("show.bs.modal", () => {
     updateBackgroundPreview()
     updateFontPreview()
     backgroundPreview.hidden = false
+    backgroundPreviewNotes.hidden = false
 })
 
 secretSettingsModal.addEventListener("hide.bs.modal", () => {
@@ -202,6 +204,7 @@ gradientSelectionReset.addEventListener("click", () => {
 
 backgroundSelection.addEventListener("change", () => {
     backgroundPreview.hidden = false
+    backgroundPreviewNotes.hidden = false
     updateBackgroundPreview()
 })
 
@@ -213,30 +216,39 @@ function updateBackgroundPreview() {
     switch (backgroundSelection.value) {
         case "seasonal":
             backgroundPreview.setAttribute("src", getSeasonalBackground((new Date()).getMonth))
+            backgroundPreviewNotes.innerHTML = "This background will change automatically based on the seasons. There are only two images we can use, so a given image is actually used for two seasons."
             break
         case "bliss":
             backgroundPreview.setAttribute("src", "./img/secret/bliss_windows_xp.webp")
+            backgroundPreviewNotes.innerHTML = "I added this in because nostalgia."
             break
         case "msc-building":
             backgroundPreview.setAttribute("src", "./img/spring_summer.webp")
+            backgroundPreviewNotes.innerHTML = "This background was brought over from the older version of the extension. There is no higher quality version because I couldn't get AI upscaling to get usable results."
             break
         case "snow":
             backgroundPreview.setAttribute("src", "./img/fall_winter.webp")
+            backgroundPreviewNotes.innerHTML = "This background was introduced in version 3.0. It's also AI upscaled, but you can also use the original, low quality version instead if you want."
             break
         case "snow-low-quality":
             backgroundPreview.setAttribute("src", "./img/secret/snow_low_quality.webp")
+            backgroundPreviewNotes.innerHTML = "This background was introduced in version 3.0. This version of the image was shared on the Programming Club Discord server and is included as-is."
             break
         case "original-fall-winter":
             backgroundPreview.setAttribute("src", "./img/secret/original_fall_winter.webp")
+            backgroundPreviewNotes.innerHTML = "Although this background was in the older version of the extension, you never actually saw it because the seasonal background feature wasn't functional at the time."
             break
         case "street-view":
             backgroundPreview.setAttribute("src", "./img/secret/street_view.webp")
+            backgroundPreviewNotes.innerHTML = "This is a Google Street View screenshot, dating back to 2012. This version of the background was shared on the Programming Club Discord server and is included as-is.<br>Image attribution: &copy; 2024 Google"
             break
         case "street-view-better":
             backgroundPreview.setAttribute("src", "./img/secret/street_view_better.webp")
+            backgroundPreviewNotes.innerHTML = "This is a Google Street View screenshot, dating back to 2012. This background has a greater field of view and resolution, compared to the other version.<br>Image attribution: &copy; 2024 Google"
             break
         default:
             backgroundPreview.hidden = true
+            backgroundPreviewNotes.hidden = true
     }
 }
 
