@@ -28,6 +28,7 @@ const fontSelection = document.getElementById("font-selection")
 const backgroundSelection = document.getElementById("background-selection")
 const gradientSelection = document.getElementById("gradient-selection")
 const gradientSelectionReset = document.getElementById("gradient-selection-reset")
+const fontPreview = document.getElementById("font-preview")
 const backgroundPreview = document.getElementById("background-preview")
 
 const controllerButtonA = document.getElementById("controller-button-a")
@@ -178,6 +179,7 @@ passcodeModalSettingsClear.addEventListener("click", () => {
 secretSettingsModal.addEventListener("show.bs.modal", () => {
     loadSecretSettings()
     updateBackgroundPreview()
+    updateFontPreview()
     backgroundPreview.hidden = false
 })
 
@@ -201,6 +203,10 @@ gradientSelectionReset.addEventListener("click", () => {
 backgroundSelection.addEventListener("change", () => {
     backgroundPreview.hidden = false
     updateBackgroundPreview()
+})
+
+fontSelection.addEventListener("change", () => {
+    updateFontPreview()
 })
 
 function updateBackgroundPreview() {
@@ -231,6 +237,40 @@ function updateBackgroundPreview() {
             break
         default:
             backgroundPreview.hidden = true
+    }
+}
+
+function updateFontPreview() {
+    switch (fontSelection.value) {
+        case "azeret-mono":
+            fontPreview.style.setProperty("font-family", "Azeret Mono, monospace", "important")
+            break
+        case "sans-serif":
+            fontPreview.style.setProperty("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif", "important")
+            break
+        case "inter":
+            fontPreview.style.setProperty("font-family", "Inter, sans-serif", "important")
+            break
+        case "lato":
+            fontPreview.style.setProperty("font-family", "Lato, sans-serif", "important")
+            break
+        case "montserrat":
+            fontPreview.style.setProperty("font-family", "Montserrat, sans-serif", "important")
+            break
+        case "nunito":
+            fontPreview.style.setProperty("font-family", "Nunito, sans-serif", "important")
+            break
+        case "poppins":
+            fontPreview.style.setProperty("font-family", "Poppins, sans-serif", "important")
+            break
+        case "raleway":
+            fontPreview.style.setProperty("font-family", "Raleway, sans-serif", "important")
+            break
+        case "rubik":
+            fontPreview.style.setProperty("font-family", "Rubik, sans-serif", "important")
+            break
+        default:
+            fontPreview.style.setProperty("font-family", "Azeret Mono, monospace", "important")
     }
 }
 
