@@ -364,6 +364,18 @@ function applySecretSettings() {
         case "bliss":
             document.documentElement.style.setProperty("--selected-background", "url(../img/secret/bliss_windows_xp.webp)")
             break
+        case "osx-tiger":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/osx_tiger.webp)")
+            break
+        case "osx-leopard":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/osx_leopard.webp)")
+            break
+        case "osx-lion":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/osx_lion.webp)")
+            break
+        case "osx-yosemite":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/osx_yosemite.webp)")
+            break
         case "msc-building":
             document.documentElement.style.setProperty("--selected-background", "url(../img/spring_summer.webp)")
             break

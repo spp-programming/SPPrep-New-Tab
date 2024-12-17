@@ -222,6 +222,22 @@ function updateBackgroundPreview() {
             backgroundPreview.setAttribute("src", "./img/secret/bliss_windows_xp.webp")
             backgroundPreviewNotes.innerHTML = "I added this in because nostalgia."
             break
+        case "osx-tiger":
+            backgroundPreview.setAttribute("src", "./img/secret/osx_tiger.webp")
+            backgroundPreviewNotes.innerHTML = "I added the OS X Leopard one, so there was no reason not to include this one too.<br>Image attribution: &copy; 2024 Apple<br>Source: <a href=\"https://512pixels.net/projects/default-mac-wallpapers-in-5k/\">512pixels.net</a>"
+            break
+        case "osx-leopard":
+            backgroundPreview.setAttribute("src", "./img/secret/osx_leopard.webp")
+            backgroundPreviewNotes.innerHTML = "One of the people in the Programming Club Discord server suggested this one.<br>Image attribution: &copy; 2024 Apple<br>Source: <a href=\"https://512pixels.net/projects/default-mac-wallpapers-in-5k/\">512pixels.net</a>"
+            break
+        case "osx-lion":
+            backgroundPreview.setAttribute("src", "./img/secret/osx_lion.webp")
+            backgroundPreviewNotes.innerHTML = "I think the same guy who suggested the OS X Leopard one would like this one too.<br>Image attribution: &copy; 2024 Apple<br>Source: <a href=\"https://512pixels.net/projects/default-mac-wallpapers-in-5k/\">512pixels.net</a>"
+            break
+        case "osx-yosemite":
+            backgroundPreview.setAttribute("src", "./img/secret/osx_yosemite.webp")
+            backgroundPreviewNotes.innerHTML = "This one is the most different from the rest of the OS X wallpapers. It's also actually the largest wallpaper (by file size) in here!<br>Image attribution: &copy; 2024 Apple<br>Source: <a href=\"https://512pixels.net/projects/default-mac-wallpapers-in-5k/\">512pixels.net</a>"
+            break
         case "msc-building":
             backgroundPreview.setAttribute("src", "./img/spring_summer.webp")
             backgroundPreviewNotes.innerHTML = "This background was brought over from the older version of the extension. There is no higher quality version because I couldn't get AI upscaling to get usable results."
@@ -326,6 +342,18 @@ function loadSecretSettings() {
         case "bliss":
             backgroundSelection.value = "bliss"
             break
+        case "osx-tiger":
+            backgroundSelection.value = "osx-tiger"
+            break
+        case "osx-leopard":
+            backgroundSelection.value = "osx-leopard"
+            break
+        case "osx-lion":
+            backgroundSelection.value = "osx-lion"
+            break
+        case "osx-yosemite":
+            backgroundSelection.value = "osx-yosemite"
+            break
         case "msc-building":
             backgroundSelection.value = "msc-building"
             break
@@ -408,6 +436,18 @@ function saveSecretSettings() {
             break
         case "bliss":
             localStorage.setItem("secretSettings_backgroundSelection", "bliss")
+            break
+        case "osx-tiger":
+            localStorage.setItem("secretSettings_backgroundSelection", "osx-tiger")
+            break
+        case "osx-leopard":
+            localStorage.setItem("secretSettings_backgroundSelection", "osx-leopard")
+            break
+        case "osx-lion":
+            localStorage.setItem("secretSettings_backgroundSelection", "osx-lion")
+            break
+        case "osx-yosemite":
+            localStorage.setItem("secretSettings_backgroundSelection", "osx-yosemite")
             break
         case "msc-building":
             localStorage.setItem("secretSettings_backgroundSelection", "msc-building")
