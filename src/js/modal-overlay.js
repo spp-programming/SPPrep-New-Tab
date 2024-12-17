@@ -58,7 +58,7 @@ function passcodeAppendValue(value) {
 }
 
 function passcodeVerify() {
-    if (passcodeModalInput.value === "\uF147\uF147\uF126\uF126\uF12E\uF137\uF12E\uF137BA\uF4F5") { // This is so stupid. At least it's better than raw Unicode characters.
+    if (passcodeModalInput.value === "\uF147\uF147\uF126\uF126\uF12E\uF137\uF12E\uF137BA\uF233") { // This is so stupid. At least it's better than raw Unicode characters.
         passcodeVerifyError(false)
         openSecretSettingsModal()
     } else {
@@ -114,11 +114,11 @@ controllerButtonB.addEventListener("click", () => {
 })
 
 controllerButtonStart.addEventListener("click", () => {
-    passcodeAppendValue("\uF4F5")
+    passcodeAppendValue("\uF233")
 })
 
 controllerButtonSelect.addEventListener("click", () => {
-    passcodeAppendValue("\uF4F5")
+    passcodeAppendValue("\uF233")
 })
 
 controllerButtonUp.addEventListener("click", () => {
