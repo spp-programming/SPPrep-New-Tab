@@ -9,7 +9,7 @@ const passcodeModalAlert = document.getElementById("passcode-modal-alert")
 function createPasscodeModalAlert() {
   const passcodeModalAlertWrapper = document.createElement("div")
   passcodeModalAlertWrapper.innerHTML = [
-    '<div class="alert alert-danger alert-dismissible" role="alert">',
+    '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">',
     '    <h4 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> Incorrect passcode</h4>',
     '    <p>You can try entering the passcode again.</p>',
     '    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
