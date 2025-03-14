@@ -87,21 +87,28 @@ function openSecretSettingsModal() {
     secretSettingsModalBS.show()
 }
 
-function getSeasonalBackground(month) {
+function getSeasonalBackground(month, day) {
     month += 1
+    let imageUrl
     if (month == 12 || month <= 2) {
         // WINTER
-        return "./img/fall_winter.webp"
+        imageUrl = "./img/fall_winter.webp"
     } else if (month >= 3 && month <= 5) {
         // SPRING
-        return "./img/spring_summer.webp"
+        imageUrl = "./img/spring_summer.webp"
     } else if (month >= 6 && month <= 9) {
         // SUMMER
-        return "./img/spring_summer.webp"
+        imageUrl = "./img/spring_summer.webp"
     } else {
         // FALL
-        return "./img/fall_winter.webp"
+        imageUrl = "./img/fall_winter.webp"
     }
+    // April Fools functionality
+    if (month == 4 && day == 1) {
+        console.log("rickroll mode activated")
+        imageUrl = "../img/secret/rickroll.avif"
+    }
+    return imageUrl
 }
 
 // Using onclick listeners in the HTML causes CSP violations. I actually fixed the issue without a hack. You can thank me :)
@@ -215,7 +222,7 @@ fontSelection.addEventListener("change", () => {
 function updateBackgroundPreview() {
     switch (backgroundSelection.value) {
         case "seasonal":
-            backgroundPreview.setAttribute("src", getSeasonalBackground((new Date()).getMonth))
+            backgroundPreview.setAttribute("src", getSeasonalBackground((new Date()).getMonth(), (new Date()).getDate()))
             backgroundPreviewNotes.innerHTML = "This background will change automatically based on the seasons. There are only two images we can use, so a given image is actually used for two seasons."
             break
         case "bliss":
@@ -261,6 +268,10 @@ function updateBackgroundPreview() {
         case "street-view-better":
             backgroundPreview.setAttribute("src", "./img/secret/street_view_better.webp")
             backgroundPreviewNotes.innerHTML = "This is a Google Street View screenshot, dating back to 2012. This background has a greater field of view and resolution, compared to the other version.<br>Image attribution: &copy; 2024 Google"
+            break
+        case "rickroll":
+            backgroundPreview.setAttribute("src", "./img/secret/rickroll.avif")
+            backgroundPreviewNotes.innerHTML = "Fun fact! This rickroll image is actually stored as an AVIF file, not a WebP. This keeps the file size low."
             break
         default:
             backgroundPreview.hidden = true
@@ -372,6 +383,9 @@ function loadSecretSettings() {
         case "street-view-better":
             backgroundSelection.value = "street-view-better"
             break
+        case "rickroll":
+            backgroundSelection.value = "rickroll"
+            break
         default:
             localStorage.removeItem("secretSettings_backgroundSelection")
     }
@@ -466,6 +480,9 @@ function saveSecretSettings() {
             break
         case "street-view-better":
             localStorage.setItem("secretSettings_backgroundSelection", "street-view-better")
+            break
+        case "rickroll":
+            localStorage.setItem("secretSettings_backgroundSelection", "rickroll")
             break
         default:
             throw Error(`Unknown value for backgroundSelection: ${backgroundSelection.value}`)

@@ -53,7 +53,7 @@ const calendarManager = (() => {
             return letterDayExtracted
         } else {
             // Handle the case where no matching letter day is found
-            console.error("No letter day found in today's events.")
+            console.log("No letter day found in today's events.")
             return "🤷‍♂️"  // or some default value or throw an error
         }
     }
@@ -79,6 +79,7 @@ const bellScheduleButton = document.getElementById("bell-schedule-button")
 const bellScheduleContainer = document.querySelector("#bellScheduleContainer")
 const modalOverlay = document.getElementById("modal-overlay")
 const emblem = document.getElementById("emblem")
+const loader = document.getElementsByClassName("loader")[0]
 
 // Stolen from https://stackoverflow.com/a/68593283
 function getTimeZoneOffsetFromName(timeZone) {
@@ -167,7 +168,7 @@ function extractLetterDay(description) {
         return "H"
     } else {
         // Handle the case where no matching letter day is found
-        console.error(`No letter day extracted for description: ${description}`)
+        console.log(`No letter day extracted for description: ${description}`)
         return "🤷‍♂️"  // or some default value or throw an error
     }
 }
@@ -258,7 +259,7 @@ async function getDate() {
     }
 }
 
-function changeSeasonalBackground(month) {
+function changeSeasonalBackground(month, day) {
     month += 1
     let imageUrl
     if (month == 12 || month <= 2) {
@@ -273,6 +274,11 @@ function changeSeasonalBackground(month) {
     } else {
         // FALL
         imageUrl = "../img/fall_winter.webp"
+    }
+    // April Fools functionality
+    if (month == 4 && day == 1) {
+        console.log("rickroll mode activated")
+        imageUrl = "../img/secret/rickroll.avif"
     }
     document.documentElement.style.setProperty(
         "--background-seasonal",
@@ -314,6 +320,10 @@ function revealPageContent() {
     // Reveal the main element only when the page is fully loaded (FOUC workaround)
     const pageContent = document.getElementById("bg-image")
     pageContent.hidden = false
+}
+
+function hideLoader() {
+    loader.style.display = "none"
 }
 
 function hideModalOverlay() {
@@ -394,6 +404,9 @@ function applySecretSettings() {
         case "street-view-better":
             document.documentElement.style.setProperty("--selected-background", "url(../img/secret/street_view_better.webp)")
             break
+        case "rickroll":
+            document.documentElement.style.setProperty("--selected-background", "url(../img/secret/rickroll.avif)")
+            break
         default:
             document.documentElement.style.setProperty("--selected-background", "var(--background-seasonal)")
             localStorage.removeItem("secretSettings_backgroundSelection")
@@ -426,9 +439,10 @@ bellScheduleContainer.addEventListener("click", () => {
 })
 
 window.addEventListener("load", () => {
-    changeSeasonalBackground((new Date).getMonth)
+    changeSeasonalBackground((new Date).getMonth(), (new Date).getDate())
     applySecretSettings()
     revealPageContent()
+    hideLoader()
 })
 
 updateTime()
