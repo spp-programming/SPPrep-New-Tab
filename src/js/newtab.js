@@ -316,12 +316,6 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
-function revealPageContent() {
-    // Reveal the main element only when the page is fully loaded (FOUC workaround)
-    const pageContent = document.getElementById("bg-image")
-    pageContent.hidden = false
-}
-
 function hideLoader() {
     loader.style.display = "none"
 }
@@ -418,6 +412,7 @@ function applySecretSettings() {
     if (/^#[0-9A-F]{6}$/i.test(localStorage.getItem("secretSettings_gradientSelection"))) {
         document.documentElement.style.setProperty("--selected-gradient", localStorage.getItem("secretSettings_gradientSelection"))
     } else {
+        document.documentElement.style.setProperty("--selected-gradient", "rgba(155, 4, 43, 1)")
         localStorage.removeItem("secretSettings_gradientSelection")
     }
 }
@@ -438,14 +433,12 @@ bellScheduleContainer.addEventListener("click", () => {
     toggleBellSchedule()
 })
 
-window.addEventListener("load", () => {
-    changeSeasonalBackground((new Date).getMonth(), (new Date).getDate())
-    applySecretSettings()
-    revealPageContent()
-    hideLoader()
-})
-
+changeSeasonalBackground((new Date).getMonth(), (new Date).getDate())
 updateTime()
 setInterval(updateTime, 1) // Calling updateTime every 1000 ms causes noticeable lag (many milliseconds) so we instead call it every millisecond to avoid this problem
 getDate()
 runOncePerDay()
+window.addEventListener("load", () => {
+    applySecretSettings()
+    hideLoader()
+})

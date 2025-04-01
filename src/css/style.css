@@ -57,8 +57,8 @@
 
 :root {
     --selected-font-family: "Azeret Mono", monospace;
-    --selected-background: url("../img/spring_summer.webp");
-    --selected-gradient: rgba(155, 4, 43, 1);
+    --selected-background: black;
+    --selected-gradient: black;
 }  
 
 body {
@@ -88,7 +88,7 @@ body {
 }
 
 #bg-image {
-    background-image: var(--selected-background);
+    background: var(--selected-background);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
